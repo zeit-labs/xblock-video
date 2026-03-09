@@ -52,12 +52,17 @@ THE SOFTWARE. */
       this.baseUrl = 'https://player.vimeo.com/video/';
       this.baseApiUrl = 'http://www.vimeo.com/api/v2/video/';
       this.videoId = Vimeo.parseUrl(this.options_.source.src).videoId;
-
+      this.techIdInURL = 'api=1&player_id=' + this.options_.techId
+      if (this.videoId && this.videoId.indexOf('/') !== -1) {
+          this.videoIdForURL = this.videoId.replace('/', '?h=') + '&';
+      } else {
+          this.videoIdForURL = this.videoId + '?';
+      }
       this.iframe = document.createElement('iframe');
       this.iframe.setAttribute('id', this.options_.techId);
       this.iframe.setAttribute('title', 'Vimeo Video Player');
       this.iframe.setAttribute('class', 'vimeoplayer');
-      this.iframe.setAttribute('src', this.baseUrl + this.videoId + '?api=1&player_id=' + this.options_.techId);
+      this.iframe.setAttribute('src', this.baseUrl + this.videoIdForURL + this.techIdInURL);
       this.iframe.setAttribute('frameborder', '0');
       this.iframe.setAttribute('scrolling', 'no');
       this.iframe.setAttribute('marginWidth', '0');
@@ -375,11 +380,11 @@ THE SOFTWARE. */
       videoId: null
     };
 
-    var regex = /^.*(vimeo\.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/))?([0-9]+)/;
+    var regex = new RegExp('^.*vimeo\\.com/(?:channels/[^/]+/|groups/[^/]+/videos/)?([0-9A-Za-z]+(?:/[0-9A-Za-z]+)?)');
     var match = url.match(regex);
 
     if (match) {
-      result.videoId = match[5];
+      result.videoId = match[1];
     }
 
     return result;

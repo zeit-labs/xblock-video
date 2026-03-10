@@ -271,7 +271,7 @@ class TranscriptsMixin(XBlock):
             lang (str)      : Iso code for language.
             lang_label (str): Name of language.
         Returns:
-            response (dict) : {"lang": lang, "url": url, "label": lang_label}
+            response (dict) : {'lang': lang, 'url': url, 'label': lang_label}
                 lang (str)  : Iso code for language.
                 url (str)   : External url for vtt file.
                 label (str) : Name of language.
@@ -463,7 +463,7 @@ class TranscriptsMixin(XBlock):
         file_id = request.json.get("file_id")
         streaming_enabled = bool(
             int(request.json.get("streaming_enabled"))
-        )  # streaming_enabled is expected to be "1"
+        )  # streaming_enabled is expected to be '1'
 
         is_valid = True
         success_message = _("Success")
@@ -672,10 +672,10 @@ class SettingsMixin(XBlock):
     Provides convenient access to XBlock's settings set in edx-platform config files.
 
     Sample default settings in /edx/app/edxapp/cms.env.json:
-    "XBLOCK_SETTINGS": {
-        "video_xblock": {
-            "threeplaymedia_apikey": "987654321",
-            "account_id": "1234567890",
+    'XBLOCK_SETTINGS': {
+        'video_xblock': {
+            'threeplaymedia_apikey': '987654321',
+            'account_id': '1234567890',
         }
     }
     """
@@ -692,8 +692,8 @@ class SettingsMixin(XBlock):
         Returns:
             dict: Settings from config file. E.g.
             {
-                "threeplaymedia_apikey": "987654321",
-                "account_id": "1234567890"
+                'threeplaymedia_apikey': '987654321',
+                'account_id': '1234567890'
             }
         """
         settings = import_from("django.conf", "settings")

@@ -31,11 +31,15 @@ var PlayerState = function(player, playerState) {
     /** Restore default or previously saved player state */
     var setInitialState = function(state) {
         var stateCurrentTime = state.currentTime;
-        var playbackProgress = localStorage.getItem('playbackProgress');
-        if (playbackProgress) {
-            playbackProgress = JSON.parse(playbackProgress);
-            if (playbackProgress[window.videoPlayerId]) {
-                stateCurrentTime = playbackProgress[window.videoPlayerId];
+        if (state.maxTimeForProgress) {
+            stateCurrentTime = state.maxPlayedTime;
+        } else {
+            var playbackProgress = localStorage.getItem('playbackProgress');
+            if (playbackProgress) {
+                playbackProgress = JSON.parse(playbackProgress);
+                if (playbackProgress[window.videoPlayerId]) {
+                    stateCurrentTime = playbackProgress[window.videoPlayerId];
+                }
             }
         }
         if (stateCurrentTime > 0) {
@@ -79,6 +83,7 @@ var PlayerState = function(player, playerState) {
                     action: 'saveState',
                     info: newState,
                     xblockUsageId: xblockUsageId,
+                    xblockFullUsageId: getXblockFullUsageId(),
                     downloadTranscriptUrl: transcriptUrl || '#'
                 },
                 document.location.protocol + '//' + document.location.host

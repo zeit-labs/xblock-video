@@ -512,9 +512,16 @@ class PlaybackStateMixin(XBlock):
         help="Captions are enabled or not"
     )
 
+    max_played_time = Float(
+        default=0,
+        scope=Scope.user_state,
+        help='Maximum time played back'
+    )
+
     player_state_fields = (
         'current_time', 'muted', 'playback_rate', 'volume', 'transcripts_enabled',
-        'captions_enabled', 'captions_language', 'transcripts'
+        'captions_enabled', 'captions_language', 'transcripts',
+        # 'max_played_time' must not be added to player_state_fields, it's calculated automatically from current_time
     )
 
     @property
@@ -548,6 +555,9 @@ class PlaybackStateMixin(XBlock):
         for field_name in self.player_state_fields:
             mixedcase_field_name = underscore_to_mixedcase(field_name)
             state.setdefault(mixedcase_field_name, getattr(self, field_name))
+        state.setdefault(underscore_to_mixedcase('max_played_time'), getattr(self, 'max_played_time'))
+        state.setdefault('maxTimeForProgress', self.settings.get('max_time_for_progress', False))
+
         return state
 
     @player_state.setter
@@ -558,8 +568,12 @@ class PlaybackStateMixin(XBlock):
         Arguments:
             state (dict): Video player state key-value pairs.
         """
+        saved_max_played_time = self.max_played_time
         for field_name in self.player_state_fields:
             setattr(self, field_name, state.get(field_name, getattr(self, field_name)))
+
+        new_max_played_time = max(float(saved_max_played_time), state.get('current_time', getattr(self, 'current_time')))
+        setattr(self, 'max_played_time', new_max_played_time)
 
     @XBlock.json_handler
     def save_player_state(self, request, _suffix=''):

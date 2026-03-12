@@ -38,7 +38,7 @@ function VideoXBlockStudentViewInit(runtime, element) {
     handlers.updateProgress[usageId] = progressHandlerUrl;
 
     /** Send data to server by POSTing it to appropriate VideoXBlock handler */
-    function sendData(handlerUrl, data, isProgressUpdate) {
+    function sendData(handlerUrl, data) {
         $.ajax({
             type: 'POST',
             url: handlerUrl,
@@ -85,7 +85,7 @@ function VideoXBlockStudentViewInit(runtime, element) {
             var action = handlers[event.data.action];
             var url = action[event.data.xblockUsageId] || action[event.data.xblockFullUsageId];  // eslint-disable-line vars-on-top
             if (url) {
-                sendData(url, event.data.info, event.data.action === 'updateProgress');
+                sendData(url, event.data.info);
             }
         } catch (err) {
             console.log(err);  // eslint-disable-line no-console

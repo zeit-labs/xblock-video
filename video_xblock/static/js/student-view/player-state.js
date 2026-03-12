@@ -105,24 +105,7 @@ var PlayerState = function(player, playerState) {
 
     setInitialState(playerState);
 
-    /** Post real-time currentTime/duration to parent so the progress bar updates every tick */
-    var sendRealtimeProgress = function() {
-        var currentTime = player.currentTime();
-        var duration = player.duration();
-        if (duration > 0) {
-            parent.postMessage(
-                {
-                    action: 'progressUpdate',
-                    xblockUsageId: xblockUsageId,
-                    info: { current_time: currentTime, duration: duration }
-                },
-                document.location.protocol + '//' + document.location.host
-            );
-        }
-    };
-
     player.on('timeupdate', saveProgressToLocalStore);
-    player.on('timeupdate', sendRealtimeProgress);
     player.on('volumechange', saveState);
     player.on('ratechange', saveState);
     player.on('play', saveState);

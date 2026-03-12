@@ -60,7 +60,7 @@ class VimeoApiClient(BaseApiClient):
         if resp.status_code == http_client.OK:
             return resp.json()
         else:
-            raise VimeoApiClientError(_('Can\'t fetch requested data from API.'))
+            raise VimeoApiClientError(_("Can't fetch requested data from API."))
 
     def post(self, url, payload, headers=None, can_retry=False):
         """
@@ -139,10 +139,10 @@ class VimeoPlayer(BaseVideoPlayer):
     fields_help = {
         'href': _('URL of the video page. E.g. https://vimeo.com/987654321'),
         'token': _(
-            'You can generate a Vimeo access token via <b>Application console\'s Authentication section</b> by '
-            '<a href=\'https://developer.vimeo.com/apps/new\' '
-            'target=\'_blank\'>creating new app</a>. Please ensure appropriate operations '
-            'scope (\'private\') has been set for access token.'
+            "You can generate a Vimeo access token via <b>Application console's Authentication section</b> by "
+            "<a href='https://developer.vimeo.com/apps/new' "
+            "target='_blank'>creating new app</a>. Please ensure appropriate operations "
+            "scope ('private') has been set for access token."
         ),
     }
 

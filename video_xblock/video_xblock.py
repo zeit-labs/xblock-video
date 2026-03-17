@@ -329,8 +329,6 @@ class VideoXBlock(
             "transcript_download_link": full_transcript_download_link,
             "version": __version__,
             "i18n_service": self.runtime.service(self, "i18n"),
-            "watch_progress_pct": int(round(self.watch_progress * 100)),
-            "completion_threshold_pct": int(self.completion_threshold),
         }
         log.debug("[student_view_context]: transcripts %s", context["transcripts"])
         frag = Fragment()

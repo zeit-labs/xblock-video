@@ -20,12 +20,7 @@ from xblock.validation import ValidationMessage
 from django.conf import settings
 
 from video_xblock.exceptions import VideoXBlockException
-from video_xblock.utils import (
-    render_resource,
-    render_template,
-    resource_string,
-    ugettext as _,
-)
+from video_xblock.utils import render_resource, render_template, resource_string, ugettext as _
 
 
 class BaseApiClient:
@@ -120,14 +115,10 @@ class BaseVideoPlayer(Plugin):
 
         Defaults to concatenation of `basic_fields` and `advanced_fields`.
         """
-        return tuple(
-            itertools.chain(
-                self.basic_fields,
-                self.advanced_fields,
-                self.trans_fields,
-                self.three_pm_fields,
-            )
-        )
+        return tuple(itertools.chain(
+            self.basic_fields, self.advanced_fields, self.trans_fields,
+            self.three_pm_fields
+        ))
 
     @property
     def basic_fields(self):
@@ -146,13 +137,8 @@ class BaseVideoPlayer(Plugin):
         Subclasses can extend or redefine list if needed. Defaults to a tuple defined by VideoXBlock.
         """
         return [
-            'start_time',
-            'end_time',
-            'handout',
-            'download_transcript_allowed',
-            'download_video_allowed',
-            'download_video_url',
-            'completion_threshold',
+            'start_time', 'end_time', 'handout', 'download_transcript_allowed',
+            'download_video_allowed', 'download_video_url', 'completion_threshold',
         ]
 
     @property
@@ -161,9 +147,7 @@ class BaseVideoPlayer(Plugin):
         List of VideoXBlock fields to display on `3PlayMedia transcripts` panel.
         """
         return [
-            'threeplaymedia_file_id',
-            'threeplaymedia_apikey',
-            'threeplaymedia_streaming',
+            'threeplaymedia_file_id', 'threeplaymedia_apikey', 'threeplaymedia_streaming'
         ]
 
     @property
@@ -238,7 +222,9 @@ class BaseVideoPlayer(Plugin):
         for css_file in css_files:
             frag.add_css(self.resource_string(css_file))
 
-        frag.add_javascript(self.render_resource('static/js/context.js', **context))
+        frag.add_javascript(
+            self.render_resource('static/js/context.js', **context)
+        )
 
         js_files = [
             'static/js/base.js',
@@ -248,14 +234,14 @@ class BaseVideoPlayer(Plugin):
             'static/vendor/js/array-from-polyfill.js',
             'static/js/videojs/video-speed.js',
             'static/js/student-view/player-state.js',
-            'static/js/videojs/videojs-speed-handler.js',
+            'static/js/videojs/videojs-speed-handler.js'
         ]
 
         if json.loads(context['player_state'])['transcripts']:
             js_files += [
                 'static/vendor/js/videojs-transcript.min.js',
                 'static/js/student-view/transcript-download.js',
-                'static/js/videojs/videojs-transcript.js',
+                'static/js/videojs/videojs-transcript.js'
             ]
 
         js_files += [
@@ -276,19 +262,24 @@ class BaseVideoPlayer(Plugin):
         Base Player setup.
         """
         return {
-            'controlBar': {'volumeMenuButton': {'inline': False, 'vertical': True}},
-            'controls': True,
-            'preload': 'auto',
-            'playbackRates': [0.5, 1, 1.5, 2],
-            'plugins': {
-                'xblockEventPlugin': {},
-                'offset': {
-                    'start': context['start_time'],
-                    'end': context['end_time'],
-                    'current_time': context['player_state']['currentTime'],
-                },
-                'videoJSSpeedHandler': {},
+            "controlBar": {
+                "volumeMenuButton": {
+                    "inline": False,
+                    "vertical": True
+                }
             },
+            "controls": True,
+            "preload": 'auto',
+            "playbackRates": [0.5, 1, 1.5, 2],
+            "plugins": {
+                "xblockEventPlugin": {},
+                "offset": {
+                    "start": context['start_time'],
+                    "end": context['end_time'],
+                    "current_time": context['player_state']['currentTime'],
+                },
+                "videoJSSpeedHandler": {},
+            }
         }
 
     @abc.abstractmethod
@@ -311,7 +302,8 @@ class BaseVideoPlayer(Plugin):
         """
         frag = self.get_frag(**context)
         return Response(
-            self.render_template('base.html', frag=frag), content_type='text/html'
+            self.render_template('base.html', frag=frag),
+            content_type='text/html'
         )
 
     def resource_string(self, path):
@@ -403,7 +395,7 @@ class BaseVideoPlayer(Plugin):
         Returns:
             unicode: Transcripts formatted in WebVTT.
         """
-        return ''
+        return u''
 
     @staticmethod
     def get_transcript_language_parameters(lang_code):
@@ -421,17 +413,11 @@ class BaseVideoPlayer(Plugin):
         lang_code = lang_code[0:2]
         # Check on consistency with the pre-configured ALL_LANGUAGES
         if lang_code not in [language[0] for language in settings.ALL_LANGUAGES]:
-            raise VideoXBlockException(
-                _(
-                    'Not all the languages of transcripts fetched from video platform are consistent '
-                    'with the pre-configured ALL_LANGUAGES'
-                )
-            )
-        lang_label = [
-            language[1]
-            for language in settings.ALL_LANGUAGES
-            if language[0] == lang_code
-        ][0]
+            raise VideoXBlockException(_(
+                'Not all the languages of transcripts fetched from video platform are consistent '
+                'with the pre-configured ALL_LANGUAGES'
+            ))
+        lang_label = [language[1] for language in settings.ALL_LANGUAGES if language[0] == lang_code][0]
         return lang_code, lang_label
 
     @staticmethod
@@ -461,8 +447,7 @@ class BaseVideoPlayer(Plugin):
         """
         enabled_languages_codes = [t['lang'] for t in transcripts]
         default_transcripts = [
-            dt
-            for dt in default_transcripts
+            dt for dt in default_transcripts
             if (dt.get('lang') not in enabled_languages_codes) and default_transcripts
         ]
         return default_transcripts

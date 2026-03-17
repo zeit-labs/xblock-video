@@ -7,9 +7,9 @@ Some terms could be useful for subject understanding:
 - manual transcripts - which we upload to xBlock from our file system;
 - default transcripts - which are available with a video clip on a video content store service;
 - 3PlayMedia transcripts - those ones which can be fetched from 3-rd-party service (http://www.3playmedia.com/);
-- enabled transcripts - equals to 'active', which are available to choose in the player;
+- enabled transcripts - equals to "active", which are available to choose in the player;
 - managed transcripts - those ones we can manage (enable or disable by our choice selectively), for now it equals
-to 'manual' + 'default'.
+to "manual" + "default".
 """
 
 import datetime
@@ -39,7 +39,7 @@ from .mixins import (
     LocationMixin,
     PlaybackStateMixin,
     SettingsMixin,
-    TranscriptsMixin,
+    TranscriptsMixin
 )
 from .settings import ALL_LANGUAGES
 from .utils import (
@@ -49,7 +49,7 @@ from .utils import (
     render_resource,
     render_template,
     resource_string,
-    ugettext as _,
+    ugettext as _
 )
 from .workbench.mixin import WorkbenchMixin
 
@@ -60,14 +60,8 @@ log = logging.getLogger(__name__)
 @XBlock.wants('completion')
 @XBlock.needs('i18n')
 class VideoXBlock(
-    SettingsMixin,
-    TranscriptsMixin,
-    PlaybackStateMixin,
-    LocationMixin,
-    StudioEditableXBlockMixin,
-    ContentStoreMixin,
-    WorkbenchMixin,
-    XBlock,
+        SettingsMixin, TranscriptsMixin, PlaybackStateMixin, LocationMixin,
+        StudioEditableXBlockMixin, ContentStoreMixin, WorkbenchMixin, XBlock
 ):
     """
     Main VideoXBlock class, responsible for saving video settings and rendering it for students.
@@ -80,14 +74,12 @@ class VideoXBlock(
 
     has_custom_completion = True
     completion_mode = XBlockCompletionMode.COMPLETABLE
-    icon_class = 'video'
+    icon_class = "video"
 
     display_name = String(
         default=_('Video'),
         display_name=_('Component Display Name'),
-        help=_(
-            'The name students see. This name appears in the course ribbon and as a header for the video.'
-        ),
+        help=_('The name students see. This name appears in the course ribbon and as a header for the video.'),
         scope=Scope.content,
     )
 
@@ -95,10 +87,10 @@ class VideoXBlock(
         default='',
         display_name=_('Video URL or FileId'),
         help=_(
-            'Video URL of the video page. E.g. https://example.wistia.com/medias/12345abcde<br/>'
-            'FileId for Tencent Player E.g. 5285890799710670616'
+            "Video URL of the video page. E.g. https://example.wistia.com/medias/12345abcde<br/>"
+            "FileId for Tencent Player E.g. 5285890799710670616"
         ),
-        scope=Scope.content,
+        scope=Scope.content
     )
 
     download_video_allowed = Boolean(
@@ -106,21 +98,19 @@ class VideoXBlock(
         scope=Scope.content,
         display_name=_('Video Download Allowed'),
         help=_(
-            'Allow students to download this video if they cannot use the edX video player.'
-            ' A link to download the file appears below the video.'
+            "Allow students to download this video if they cannot use the edX video player."
+            " A link to download the file appears below the video."
         ),
-        resettable_editor=False,
+        resettable_editor=False
     )
 
     download_video_url = String(
         default='',
         display_name=_('Video file URL'),
-        help=_(
-            "The URL where you've posted non hosted versions of the video. URL must end in .mpeg, .mp4, .ogg, or"
-            ' .webm. (For browser compatibility, we strongly recommend .mp4 and .webm format.) To allow students to'
-            ' download these videos, set Video Download Allowed to True.'
-        ),
-        scope=Scope.content,
+        help=_("The URL where you've posted non hosted versions of the video. URL must end in .mpeg, .mp4, .ogg, or"
+               " .webm. (For browser compatibility, we strongly recommend .mp4 and .webm format.) To allow students to"
+               " download these videos, set Video Download Allowed to True."),
+        scope=Scope.content
     )
 
     account_id = String(
@@ -140,42 +130,43 @@ class VideoXBlock(
     player_id = String(
         default='default',
         display_name=_('Player Id'),
-        help=_(
-            "Your Brightcove player id. Use 'Luna' theme for all your players. You can choose one of your players"
-            " from a <a href='https://studio.brightcove.com/products/videocloud/players' target='_blank'>list</a>."
-        ),
+        help=_('Your Brightcove player id. Use "Luna" theme for all your players. You can choose one of your players'
+               ' from a <a href="https://studio.brightcove.com/products/videocloud/players" target="_blank">list</a>.'),
         scope=Scope.content,
     )
 
-    player_name = String(default=PlayerName.DUMMY, scope=Scope.content)
+    player_name = String(
+        default=PlayerName.DUMMY,
+        scope=Scope.content
+    )
 
     start_time = RelativeTime(  # datetime.timedelta object
         help=_(
             "Time you want the video to start if you don't want the entire video to play. "
-            'Not supported in the native mobile app: the full video file will play. '
-            'Formatted as HH:MM:SS. The maximum value is 23:59:59.'
+            "Not supported in the native mobile app: the full video file will play. "
+            "Formatted as HH:MM:SS. The maximum value is 23:59:59."
         ),
-        display_name=_('Video Start Time'),
+        display_name=_("Video Start Time"),
         scope=Scope.content,
-        default=datetime.timedelta(seconds=0),
+        default=datetime.timedelta(seconds=0)
     )
 
     end_time = RelativeTime(  # datetime.timedelta object
         help=_(
             "Time you want the video to stop if you don't want the entire video to play. "
-            'Not supported in the native mobile app: the full video file will play. '
-            'Formatted as HH:MM:SS. The maximum value is 23:59:59.'
+            "Not supported in the native mobile app: the full video file will play. "
+            "Formatted as HH:MM:SS. The maximum value is 23:59:59."
         ),
-        display_name=_('Video Stop Time'),
+        display_name=_("Video Stop Time"),
         scope=Scope.content,
-        default=datetime.timedelta(seconds=0),
+        default=datetime.timedelta(seconds=0)
     )
 
     handout = String(
         default='',
         scope=Scope.content,
         display_name=_('Upload handout'),
-        help=_('You can upload handout file for students'),
+        help=_('You can upload handout file for students')
     )
 
     download_transcript_allowed = Boolean(
@@ -183,11 +174,11 @@ class VideoXBlock(
         scope=Scope.content,
         display_name=_('Download Transcript Allowed'),
         help=_(
-            'Allow students to download the timed transcript. A link to download the file appears below the video.'
-            ' By default, the transcript is an .vtt or .srt file. If you want to provide the transcript for download'
-            ' in a different format, upload a file by using the Upload Handout field.'
+            "Allow students to download the timed transcript. A link to download the file appears below the video."
+            " By default, the transcript is an .vtt or .srt file. If you want to provide the transcript for download"
+            " in a different format, upload a file by using the Upload Handout field."
         ),
-        resettable_editor=False,
+        resettable_editor=False
     )
 
     default_transcripts = List(
@@ -197,31 +188,27 @@ class VideoXBlock(
         help=_(
             'Default transcripts are uploaded automatically from a video platform '
             'to the list of available transcripts.<br/>'
-            "<b>Note: valid 'Video API Token' should be given in order to make auto fetching possible.</b><br/>"
+            '<b>Note: valid "Video API Token" should be given in order to make auto fetching possible.</b><br/>'
             'Advice: disable transcripts displaying on your video service to avoid transcripts overlapping.'
         ),
-        resettable_editor=False,
+        resettable_editor=False
     )
 
     token = String(
         default='',
         display_name=_('Video API Token'),
-        help=_(
-            "You can generate a client token following official documentation of your video platform's API."
-        ),
+        help=_('You can generate a client token following official documentation of your video platform\'s API.'),
         scope=Scope.content,
-        resettable_editor=False,
+        resettable_editor=False
     )
 
     metadata = Dict(
         default={},
         display_name=_('Metadata'),
-        help=_(
-            'This field stores different metadata, e.g. authentication data. '
-            "If new metadata item is designed, this is to add an appropriate key to backend's "
-            '`metadata_fields` property.'
-        ),
-        scope=Scope.content,
+        help=_('This field stores different metadata, e.g. authentication data. '
+               'If new metadata item is designed, this is to add an appropriate key to backend\'s '
+               '`metadata_fields` property.'),
+        scope=Scope.content
     )
 
     @property
@@ -239,7 +226,8 @@ class VideoXBlock(
             validation (xblock.validation.Validation): Object containing validation information for an xblock instance.
             data (xblock.internal.VideoXBlockWithMixins): Object containing data on xblock.
         """
-        is_not_provided_href = data.href == self.fields['href'].default  # pylint: disable=unsubscriptable-object
+        is_not_provided_href = \
+            data.href == self.fields['href'].default  # pylint: disable=unsubscriptable-object
         is_matched_href = False
         for _player_name, player_class in BaseVideoPlayer.load_classes():
             if player_class.match(data.href):
@@ -247,7 +235,8 @@ class VideoXBlock(
         # Validate provided video href value
         if not (is_not_provided_href or is_matched_href):
             self.add_validation_message(
-                validation, _('Incorrect or unsupported video URL, please recheck.')
+                validation,
+                _(u"Incorrect or unsupported video URL, please recheck.")
             )
 
     def validate_field_data(self, validation, data):
@@ -269,7 +258,7 @@ class VideoXBlock(
         """
         Return direct video url for download if download is allowed.
 
-        Else return `False` which will hide 'download video' button.
+        Else return `False` which will hide "download video" button.
         """
         return self.download_video_allowed and self.get_player().download_video_url
 
@@ -287,9 +276,7 @@ class VideoXBlock(
         text_js = 'static/js/translations/{lang_code}/text.js'
 
         for code in (lang_code, country_code):
-            if pkg_resources.resource_exists(
-                loader.module_name, text_js.format(lang_code=code)
-            ):
+            if pkg_resources.resource_exists(loader.module_name, text_js.format(lang_code=code)):
                 return text_js.format(lang_code=code)
 
     def add_i18n_resource(self, frag):
@@ -305,16 +292,12 @@ class VideoXBlock(
         The primary view of the `VideoXBlock`, shown to students when viewing courses.
         """
         player_url = self.runtime.handler_url(self, 'render_player')
-        download_transcript_handler_url = self.runtime.handler_url(
-            self, 'download_transcript'
-        )
+        download_transcript_handler_url = self.runtime.handler_url(self, 'download_transcript')
         transcript_download_link = self.get_transcript_download_link()
         full_transcript_download_link = ''
 
         if transcript_download_link:
-            full_transcript_download_link = (
-                download_transcript_handler_url + transcript_download_link
-            )
+            full_transcript_download_link = download_transcript_handler_url + transcript_download_link
 
         context = {
             'player_url': player_url,
@@ -330,12 +313,12 @@ class VideoXBlock(
             'version': __version__,
             'i18n_service': self.runtime.service(self, 'i18n'),
         }
-        log.debug('[student_view_context]: transcripts %s', context['transcripts'])
+        log.debug("[student_view_context]: transcripts %s", context['transcripts'])
         frag = Fragment()
         frag.content = render_template('student_view.html', **context)
         self.add_i18n_resource(frag)
-        frag.add_javascript(resource_string('static/js/student-view/video-xblock.js'))
-        frag.add_css(resource_string('static/css/student-view.css'))
+        frag.add_javascript(resource_string("static/js/student-view/video-xblock.js"))
+        frag.add_css(resource_string("static/css/student-view.css"))
         frag.initialize_js('VideoXBlockStudentViewInit')
         return frag
 
@@ -343,40 +326,30 @@ class VideoXBlock(
         """
         Private method to fetch/update default transcripts.
         """
-        log.debug('Default transcripts updating...')
+        log.debug("Default transcripts updating...")
         # Prepare parameters necessary to make requests to API.
         video_id = player.media_id(self.href)
         kwargs = {'video_id': video_id}
         for k in self.metadata:
             kwargs[k] = self.metadata[k]
         # For a Brightcove player only
-        is_not_default_account_id = (
-            self.account_id is not self.fields['account_id'].default
-        )  # pylint: disable=unsubscriptable-object
+        is_not_default_account_id = \
+            self.account_id is not self.fields['account_id'].default  # pylint: disable=unsubscriptable-object
         if is_not_default_account_id:
             kwargs['account_id'] = self.account_id
 
         # Fetch captions list (available/default transcripts list) from video platform API
         try:
-            default_transcripts, transcripts_autoupload_message = (
-                player.get_default_transcripts(**kwargs)
-            )
+            default_transcripts, transcripts_autoupload_message = player.get_default_transcripts(**kwargs)
         except ApiClientError:
-            default_transcripts, transcripts_autoupload_message = (
-                [],
-                _('Failed to fetch default transcripts.'),
-            )
+            default_transcripts, transcripts_autoupload_message = [], _('Failed to fetch default transcripts.')
         log.debug("Autofetch message: '{}'".format(transcripts_autoupload_message))
         # Default transcripts should contain transcripts of distinct languages only
-        distinct_default_transcripts = player.clean_default_transcripts(
-            default_transcripts
-        )
+        distinct_default_transcripts = player.clean_default_transcripts(default_transcripts)
         # Needed for frontend
         initial_default_transcripts = distinct_default_transcripts
         # Exclude enabled transcripts from the list of available ones, and remove duplicates
-        filtered_default_transcripts = player.filter_default_transcripts(
-            distinct_default_transcripts, transcripts
-        )
+        filtered_default_transcripts = player.filter_default_transcripts(distinct_default_transcripts, transcripts)
         self.default_transcripts = filtered_default_transcripts
         if self.default_transcripts:
             self.default_transcripts.sort(key=lambda l: l['label'])
@@ -392,23 +365,19 @@ class VideoXBlock(
         languages = [{'label': label, 'code': lang} for lang, label in ALL_LANGUAGES]
         languages.sort(key=lambda l: l['label'])
         transcripts = self.get_enabled_transcripts()
-        download_transcript_handler_url = self.runtime.handler_url(
-            self, 'download_transcript'
-        )
+        download_transcript_handler_url = self.runtime.handler_url(self, 'download_transcript')
         auth_error_message = ''
         # Authenticate to API of the player video platform and update metadata with auth information.
         # Note that there is no need to authenticate to Youtube API,
         # whilst for Wistia, a sample authorised request is to be made to ensure authentication succeeded,
         # since it is needed for the auth status message generation and the player's state update with auth status.
         if self.token:
-            _auth_data, auth_error_message = self.authenticate_video_api(
-                self.token.encode(encoding='utf-8')
-            )
+            _auth_data, auth_error_message = self.authenticate_video_api(self.token.encode(encoding='utf-8'))
 
-        initial_default_transcripts, transcripts_autoupload_message = (
-            self._update_default_transcripts(player, transcripts)
+        initial_default_transcripts, transcripts_autoupload_message = self._update_default_transcripts(
+            player, transcripts
         )
-        log.debug('Fetched default transcripts: {}'.format(initial_default_transcripts))
+        log.debug("Fetched default transcripts: {}".format(initial_default_transcripts))
 
         # Prepare basic_fields and advanced_fields for them to be rendered
         basic_fields = self.prepare_studio_editor_fields(player.basic_fields)
@@ -426,12 +395,8 @@ class VideoXBlock(
             'transcripts': filter_transcripts_by_source(
                 transcripts, sources=[TranscriptSource.THREE_PLAY_MEDIA], exclude=True
             ),
-            'transcripts_fields': self.prepare_studio_editor_fields(
-                player.trans_fields
-            ),
-            'three_pm_fields': self.prepare_studio_editor_fields(
-                player.three_pm_fields
-            ),
+            'transcripts_fields': self.prepare_studio_editor_fields(player.trans_fields),
+            'three_pm_fields': self.prepare_studio_editor_fields(player.three_pm_fields),
             'transcripts_type': '3PM' if self.threeplaymedia_streaming else 'manual',
             'default_transcripts': self.default_transcripts,
             'enabled_default_transcripts': filter_transcripts_by_source(transcripts),
@@ -446,21 +411,17 @@ class VideoXBlock(
         }
 
         fragment.content = render_template('studio-edit.html', **context)
-        fragment.add_css(resource_string('static/css/student-view.css'))
-        fragment.add_css(resource_string('static/css/transcripts-upload.css'))
-        fragment.add_css(resource_string('static/css/studio-edit.css'))
-        fragment.add_css(resource_string('static/css/studio-edit-accordion.css'))
+        fragment.add_css(resource_string("static/css/student-view.css"))
+        fragment.add_css(resource_string("static/css/transcripts-upload.css"))
+        fragment.add_css(resource_string("static/css/studio-edit.css"))
+        fragment.add_css(resource_string("static/css/studio-edit-accordion.css"))
 
         self.add_i18n_resource(fragment)
-        fragment.add_javascript(resource_string('static/js/runtime-handlers.js'))
-        fragment.add_javascript(resource_string('static/js/studio-edit/utils.js'))
-        fragment.add_javascript(resource_string('static/js/studio-edit/studio-edit.js'))
-        fragment.add_javascript(
-            resource_string('static/js/studio-edit/transcripts-autoload.js')
-        )
-        fragment.add_javascript(
-            resource_string('static/js/studio-edit/transcripts-manual-upload.js')
-        )
+        fragment.add_javascript(resource_string("static/js/runtime-handlers.js"))
+        fragment.add_javascript(resource_string("static/js/studio-edit/utils.js"))
+        fragment.add_javascript(resource_string("static/js/studio-edit/studio-edit.js"))
+        fragment.add_javascript(resource_string("static/js/studio-edit/transcripts-autoload.js"))
+        fragment.add_javascript(resource_string("static/js/studio-edit/transcripts-manual-upload.js"))
         fragment.initialize_js('StudioEditableXBlock', js_context)
         return fragment
 
@@ -479,21 +440,18 @@ class VideoXBlock(
         is_brightcove = str(self.player_name) == PlayerName.BRIGHTCOVE
         save_state_url = self.runtime.handler_url(self, 'save_player_state')
         transcripts = render_resource(
-            'static/html/transcripts.html', transcripts=list(self.route_transcripts())
+            'static/html/transcripts.html',
+            transcripts=list(self.route_transcripts())
         ).strip()
         return player.get_player_html(
-            url=self.href,
-            account_id=self.account_id,
-            player_id=self.player_id,
+            url=self.href, account_id=self.account_id, player_id=self.player_id,
             video_id=player.media_id(self.href),
             video_player_id='video_player_{}'.format(self.block_id),
             save_state_url=save_state_url,
             player_state=self.player_state,
             start_time=int(self.start_time.total_seconds()),  # pylint: disable=no-member
             end_time=int(self.end_time.total_seconds()),  # pylint: disable=no-member
-            brightcove_js_url=player.get_js_url(self.account_id, self.player_id)
-            if is_brightcove
-            else '',
+            brightcove_js_url=player.get_js_url(self.account_id, self.player_id) if is_brightcove else '',
             transcripts=transcripts,
             app_id=self.app_id,
         )
@@ -543,8 +501,6 @@ class VideoXBlock(
         current_time = float(data.get('current_time', 0))
         duration = float(data.get('duration', 0))
 
-        # BUG 3 fix: bail out early when duration is invalid — nothing
-        # meaningful can be calculated and we must not touch stored state.
         if duration <= 0:
             return {
                 'watch_progress': self.watch_progress,
@@ -552,24 +508,16 @@ class VideoXBlock(
                 'completed': self.watch_progress >= (self.completion_threshold / 100.0),
             }
 
-        # Phase 2: when max_time_for_progress is enabled, advance
-        # max_played_time (with tolerance) and cap current_time so that
-        # seeking ahead cannot inflate watch_progress.
         max_time_for_progress = self.settings.get('max_time_for_progress', False)
         if max_time_for_progress:
             saved_max = float(self.max_played_time)
             max_played_time_tolerance = 15  # seconds
             if current_time <= saved_max + max_played_time_tolerance:
                 self.max_played_time = max(saved_max, current_time)
-            # Cap the time used for progress calculation at the (possibly
-            # just-updated) max_played_time.
             effective_time = min(current_time, float(self.max_played_time))
         else:
             effective_time = current_time
 
-        # BUG 4 fix: last_position is now inside the duration > 0 guard.
-        # last_position records the *actual* playback position (uncapped)
-        # so the player resumes from the right place.
         self.last_position = current_time
 
         progress = min(effective_time / duration, 1.0)
@@ -580,9 +528,6 @@ class VideoXBlock(
         threshold = self.completion_threshold / 100.0
         completed = self.watch_progress >= threshold
 
-        # BUG 1 + BUG 2 fix: use the completion service API (not
-        # runtime.publish) and only submit once — when the student first
-        # crosses the threshold.
         if completed and not was_completed:
             completion_service = self.runtime.service(self, 'completion')
             if completion_service:
@@ -619,9 +564,7 @@ class VideoXBlock(
                 continue
             if player_class.match(data['href']):
                 data['player_name'] = player_name
-                log.debug(
-                    'Submitted player[{}] with data: {}'.format(player_name, data)
-                )
+                log.debug("Submitted player[{}] with data: {}".format(player_name, data))
                 break
 
     def get_player(self):
@@ -677,11 +620,7 @@ class VideoXBlock(
         """
         for key, value in self.settings.items():
             # if field value is empty and there is json-settings default:
-            if field.name == key and getattr(field, 'default', None) in [
-                '',
-                '',
-                'default',
-            ]:
+            if field.name == key and getattr(field, 'default', None) in ['', u'', 'default']:
                 setattr(field, '_default', value)  # pylint: disable=literal-used-as-attribute
 
         return field
@@ -704,7 +643,7 @@ class VideoXBlock(
             # RelativeTime field isn't supported by default.
             info = {
                 'name': field_name,
-                'display_name': field.display_name if field.display_name else '',
+                'display_name': field.display_name if field.display_name else "",
                 'is_set': field.is_set_on(self),
                 'default': field.default,
                 'value': field.read_from(self),
@@ -715,9 +654,7 @@ class VideoXBlock(
                 'type': 'string',
             }
         elif field_name in ('handout', 'transcripts', 'default_transcripts', 'token'):
-            info = self.initialize_studio_field_info(
-                field_name, field, field_type=field_name
-            )
+            info = self.initialize_studio_field_info(field_name, field, field_type=field_name)
         else:
             info = self.initialize_studio_field_info(field_name, field)
         return info
@@ -800,7 +737,10 @@ class VideoXBlock(
         Returns:
              Response object, containing response data.
         """
-        resp = {'success': True, 'data': {}}
+        resp = {
+            'success': True,
+            'data': {}
+        }
         if suffix == 'get-metadata':
             resp['data'] = {'metadata': self.metadata}
         elif suffix == 'can-show-backend-settings':
@@ -810,9 +750,7 @@ class VideoXBlock(
             else:
                 resp['data'] = {'canShow': False}
 
-        response = Response(
-            json.dumps(resp), content_type='application/json', charset='utf8'
-        )
+        response = Response(json.dumps(resp), content_type='application/json', charset='utf8')
         return response
 
     def authenticate_video_api(self, token):
@@ -832,14 +770,12 @@ class VideoXBlock(
         # Handles a case where no account_id was provided by a user
         if str(self.player_name) == PlayerName.BRIGHTCOVE:
             if self.account_id == self.fields['account_id'].default:  # pylint: disable=unsubscriptable-object
-                error_message = "In order to authenticate to a video platform's API, please provide an Account Id."
+                error_message = 'In order to authenticate to a video platform\'s API, please provide an Account Id.'
                 return {}, error_message
             kwargs['account_id'] = self.account_id
 
         player = self.get_player()
-        if str(self.player_name) == PlayerName.BRIGHTCOVE and self.metadata.get(
-            'client_id'
-        ):
+        if str(self.player_name) == PlayerName.BRIGHTCOVE and self.metadata.get('client_id'):
             auth_data = {
                 'client_secret': self.metadata.get('client_secret'),
                 'client_id': self.metadata.get('client_id'),
@@ -871,8 +807,8 @@ class VideoXBlock(
         if not token or (is_default_token and is_youtube_player):
             return {
                 'error_message': "In order to authenticate to a video platform's API, "
-                'please provide a Video API Token.'
-            }
+                                 "please provide a Video API Token."
+                }
 
         _auth_data, error_message = self.authenticate_video_api(token)
         if error_message:
@@ -911,11 +847,11 @@ class VideoXBlock(
         # due to the circular import
         from cms.djangoapps.contentstore.views.assets import update_course_run_asset
 
-        upload = request.params.get('file')
+        upload = request.params.get("file")
         upload_file = upload.file
         course_key_string = request.params.get('course_key')
         course_key = CourseKey.from_string(course_key_string)
-        filename = upload_file.name.replace(' ', '_')
+        filename = upload_file.name.replace(" ", "_")
 
         # All upload files (except for .srt) are saved without conversion.
         # The transcript in the .srt format should be converted to the .vtt format
@@ -924,10 +860,10 @@ class VideoXBlock(
             upload_file = self._convert_file_to_vtt(upload_file, filename)
         if not upload_file:
             return Response(
-                json.dumps({'message': _('Failed to convert file.')}),
+                json.dumps({'message': _("Failed to convert file.")}),
                 status_code=422,
                 content_type='application/json',
-                charset='utf8',
+                charset='utf8'
             )
         # returns contents of the uploaded file
         content = update_course_run_asset(course_key, upload_file)
@@ -941,14 +877,12 @@ class VideoXBlock(
                 readback.last_modified_at,
                 content.location,
                 content.thumbnail_location,
-                locked,
+                locked
             ),
-            'msg': _('Upload completed'),
+            'msg': _('Upload completed')
         }
 
-        return Response(
-            json.dumps(response), content_type='application/json', charset='utf8'
-        )
+        return Response(json.dumps(response), content_type='application/json', charset='utf8')
 
     @XBlock.json_handler
     def upload_default_transcript_handler(self, data, _suffix=''):
@@ -962,13 +896,13 @@ class VideoXBlock(
             response (dict): Data on a default transcript, fetched from a video platform.
 
         """
-        log.debug('Uploading default transcript with data: {}'.format(data))
+        log.debug("Uploading default transcript with data: {}".format(data))
         player = self.get_player()
         video_id = player.media_id(self.href)
-        lang_code = str(data.get('lang'))
-        lang_label = str(data.get('label'))
-        source = str(data.get('source', ''))
-        sub_url = str(data.get('url'))
+        lang_code = str(data.get(u'lang'))
+        lang_label = str(data.get(u'label'))
+        source = str(data.get(u'source', ''))
+        sub_url = str(data.get(u'url'))
 
         reference_name = create_reference_name(lang_label, video_id, source)
 
@@ -987,7 +921,7 @@ class VideoXBlock(
         )
 
         # Exceptions are handled on the frontend
-        success_message = "Successfully uploaded '{}'.".format(file_name)
+        success_message = 'Successfully uploaded "{}".'.format(file_name)
         response = {
             'success_message': success_message,
             'lang': lang_code,
@@ -995,7 +929,7 @@ class VideoXBlock(
             'label': lang_label,
             'source': source,
         }
-        log.debug('Uploaded default transcript: {}'.format(response))
+        log.debug("Uploaded default transcript: {}".format(response))
         return response
 
     def get_enabled_transcripts(self):
@@ -1003,17 +937,15 @@ class VideoXBlock(
         Get transcripts from different sources depending on current usage mode.
         """
         if self.threeplaymedia_streaming:
-            transcripts = normalize_transcripts(
-                list(self.fetch_available_3pm_transcripts())
-            )
+            transcripts = normalize_transcripts(list(self.fetch_available_3pm_transcripts()))
         else:
             transcripts = self.get_enabled_managed_transcripts()
-        log.debug('Getting enabled transcripts: %s', transcripts)
+        log.debug("Getting enabled transcripts: %s", transcripts)
         return transcripts
 
     def get_enabled_managed_transcripts(self):
         """
-        Get currently enabled in player `managed` ('manual' & 'default') transcripts.
+        Get currently enabled in player `managed` ("manual" & "default") transcripts.
 
         Please, for term definitions refer to the module docstring.
         :return: (list) transcripts that enabled but not directly streamed.
@@ -1022,11 +954,7 @@ class VideoXBlock(
             transcripts = json.loads(self.transcripts) if self.transcripts else []
             return normalize_transcripts(transcripts)
         except ValueError:
-            log.exception(
-                "JSON parser can't handle 'self.transcripts' field value: {}".format(
-                    self.transcripts
-                )
-            )
+            log.exception("JSON parser can't handle 'self.transcripts' field value: {}".format(self.transcripts))
             return []
 
     def index_dictionary(self):
@@ -1037,50 +965,39 @@ class VideoXBlock(
         Takes enabled transcripts' content and puts it to search index.
         """
         xblock_body = super(VideoXBlock, self).index_dictionary()
-        video_body = {'display_name': self.display_name}
+        video_body = {"display_name": self.display_name}
 
         content = None
         enabled_transcripts = self.route_transcripts()
         for transcript in enabled_transcripts:
-            asset_file_name = transcript['url'].split('@')[-1]
+            asset_file_name = transcript[u'url'].split('@')[-1]
             try:
-                if transcript['source'] in [
-                    TranscriptSource.MANUAL,
-                    TranscriptSource.DEFAULT,
-                ]:
-                    asset_location = self.static_content.compute_location(
-                        self.course_key, asset_file_name
-                    )
+                if transcript['source'] in [TranscriptSource.MANUAL, TranscriptSource.DEFAULT]:
+                    asset_location = self.static_content.compute_location(self.course_key, asset_file_name)
                     asset = self.contentstore().find(asset_location)  # pylint: disable=not-callable
                     content = asset.data
                 elif transcript['source'] == TranscriptSource.THREE_PLAY_MEDIA:
-                    external_transcript = self.fetch_single_3pm_translation(
-                        {'id': transcript['id'], 'language_id': transcript['lang_id']}
-                    )
+                    external_transcript = self.fetch_single_3pm_translation({
+                        'id': transcript['id'], 'language_id': transcript['lang_id']
+                    })
                     content = external_transcript and external_transcript.content
             except IOError:
-                log.exception(
-                    "Transcript indexing failure: can't fetch external transcript[{}]".format(
-                        transcript
-                    )
-                )
+                log.exception("Transcript indexing failure: can't fetch external transcript[{}]".format(transcript))
             except (ValueError, KeyError, TypeError, AttributeError):
                 log.exception(
-                    "Transcript indexing failure: can't parse transcript for indexing: [{}]".format(
-                        transcript
-                    )
+                    "Transcript indexing failure: can't parse transcript for indexing: [{}]".format(transcript)
                 )
             else:
                 if content:
                     content_ = self.vtt_to_text(content)
-                    video_body.update({transcript['lang']: content_})
+                    video_body.update({transcript[u'lang']: content_})
             finally:
                 content = None
 
-        if 'content' in xblock_body:
-            xblock_body['content'].update(video_body)
+        if "content" in xblock_body:
+            xblock_body["content"].update(video_body)
         else:
-            xblock_body['content'] = video_body
-        xblock_body['content_type'] = 'Video'
+            xblock_body["content"] = video_body
+        xblock_body["content_type"] = "Video"
 
         return xblock_body

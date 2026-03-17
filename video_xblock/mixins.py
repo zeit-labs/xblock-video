@@ -1,7 +1,6 @@
 """
 Video XBlock mixins geared toward specific subsets of functionality.
 """
-
 import io
 import logging
 import requests
@@ -17,14 +16,7 @@ from xblock.core import XBlock
 from xblock.exceptions import NoSuchServiceError
 from xblock.fields import Scope, Boolean, Float, String
 
-from .constants import (
-    DEFAULT_LANG,
-    TPMApiTranscriptFormatID,
-    TPMApiLanguage,
-    TranscriptSource,
-    Status,
-    PlayerName,
-)
+from .constants import DEFAULT_LANG, TPMApiTranscriptFormatID, TPMApiLanguage, TranscriptSource, Status, PlayerName
 from .utils import import_from, ugettext as _, underscore_to_mixedcase, Transcript
 
 from common.djangoapps.util.date_utils import get_default_time_display
@@ -79,19 +71,15 @@ class TranscriptsMixin(XBlock):
         default=False,
         display_name=_('Direct 3PlayMedia'),
         scope=Scope.content,
-        help=_(
-            "Direct <a href='http://www.3playmedia.com/'>3PlayMedia</a> transcripts usage enabled."
-        ),
+        help=_("Direct <a href='http://www.3playmedia.com/'>3PlayMedia</a> transcripts usage enabled.")
     )
 
     threeplaymedia_apikey = String(
         default='',
         display_name=_('3PlayMedia API Key'),
-        help=_(
-            "You can generate a client token following official documentation of your video platform's API."
-        ),
+        help=_('You can generate a client token following official documentation of your video platform\'s API.'),
         scope=Scope.content,
-        resettable_editor=False,
+        resettable_editor=False
     )
 
     threeplaymedia_file_id = String(
@@ -99,21 +87,16 @@ class TranscriptsMixin(XBlock):
         display_name=_('File Id'),
         help=_('3playmedia file id for download bind transcripts.'),
         scope=Scope.content,
-        resettable_editor=False,
+        resettable_editor=False
     )
 
     @staticmethod
-    def _get_asset_json(
-        display_name, content_type, date, location, thumbnail_location, locked
-    ):
+    def _get_asset_json(display_name, content_type, date, location, thumbnail_location, locked):
         """
         Helper method for formatting the asset information to send to client.
         """
         asset_url = StaticContent.serialize_asset_key_with_slash(location)
-        external_url = urljoin(
-            configuration_helpers.get_value('LMS_ROOT_URL', settings.LMS_ROOT_URL),
-            asset_url,
-        )
+        external_url = urljoin(configuration_helpers.get_value('LMS_ROOT_URL', settings.LMS_ROOT_URL), asset_url)
         return {
             'display_name': display_name,
             'content_type': content_type,
@@ -121,14 +104,10 @@ class TranscriptsMixin(XBlock):
             'url': asset_url,
             'external_url': external_url,
             'portable_url': StaticContent.get_static_path_from_location(location),
-            'thumbnail': StaticContent.serialize_asset_key_with_slash(
-                thumbnail_location
-            )
-            if thumbnail_location
-            else None,
+            'thumbnail': StaticContent.serialize_asset_key_with_slash(thumbnail_location) if thumbnail_location else None,
             'locked': locked,
             # needed for Backbone delete/update.
-            'id': str(location),
+            'id': str(location)
         }
 
     def _convert_file_to_vtt(self, file, filename):
@@ -142,7 +121,7 @@ class TranscriptsMixin(XBlock):
         except IndexError:
             return
 
-        filename = filename.replace('.srt', '.vtt')
+        filename = filename.replace(".srt", ".vtt")
         transcript_bytes = bytes(transcript_vtt, 'utf-8')
         return InMemoryUploadedFile(
             file=io.BytesIO(transcript_bytes),
@@ -150,7 +129,7 @@ class TranscriptsMixin(XBlock):
             content_type='text/plain',
             size=len(transcript_bytes),
             field_name='transcript',
-            charset=None,
+            charset=None
         )
 
     @staticmethod
@@ -169,7 +148,7 @@ class TranscriptsMixin(XBlock):
             reader = detect_format(caps)
             if reader:
                 return WebVTTWriter().write(reader().read(caps))
-        return ''
+        return u''
 
     @staticmethod
     def vtt_to_text(vtt_content):
@@ -195,26 +174,20 @@ class TranscriptsMixin(XBlock):
         Arguments:
             transcripts (unicode): Raw transcripts.
         """
-        log.debug(
-            'Routing transcripts: 3PM status={}'.format(self.threeplaymedia_streaming)
-        )
+        log.debug("Routing transcripts: 3PM status={}".format(self.threeplaymedia_streaming))
         transcripts = self.get_enabled_transcripts()
         for tran in transcripts:
             if self.threeplaymedia_streaming:
                 # download URL remains hidden behind the handler:
                 tran['download_url'] = self.runtime.handler_url(
-                    self,
-                    'fetch_from_three_play_media',
-                    query='{}={}'.format(tran['lang_id'], tran['id']),
+                    self, 'fetch_from_three_play_media', query="{}={}".format(tran['lang_id'], tran['id'])
                 )
                 # NOTE(wowkalucky): for some reason handler's URL doesn't work in combination
                 # Brightcove player/Safari browser. Safari just doesn't populate text tracks with cues!
                 # So, we have to expose raw 3PM URL for Brightcove users, for now...
                 if str(self.player_name) != PlayerName.BRIGHTCOVE:
                     tran['url'] = self.runtime.handler_url(
-                        self,
-                        'fetch_from_three_play_media',
-                        query='{}={}'.format(tran['lang_id'], tran['id']),
+                        self, 'fetch_from_three_play_media', query="{}={}".format(tran['lang_id'], tran['id'])
                     )
             elif not tran['url'].endswith('.vtt'):
                 tran['url'] = self.runtime.handler_url(
@@ -244,13 +217,14 @@ class TranscriptsMixin(XBlock):
             File's file_name and external_url.
         """
         # Define location of default transcript as a future asset and prepare content to store in assets
-        file_name = reference_name.replace(' ', '_') + ext
+        file_name = reference_name.replace(" ", "_") + ext
         course_key = self.course_key
-        content_loc = self.static_content.compute_location(
-            course_key, file_name
-        )  # AssetLocator object
+        content_loc = self.static_content.compute_location(course_key, file_name)  # AssetLocator object
         content = self.static_content(
-            content_loc, file_name, 'application/json', trans_str
+            content_loc,
+            file_name,
+            'application/json',
+            trans_str
         )  # StaticContent object
         external_url = '/' + str(content_loc)
 
@@ -259,9 +233,7 @@ class TranscriptsMixin(XBlock):
 
         return file_name, external_url
 
-    def convert_3playmedia_caps_to_vtt(
-        self, caps, video_id, lang='en', lang_label='English'
-    ):
+    def convert_3playmedia_caps_to_vtt(self, caps, video_id, lang="en", lang_label="English"):
         """
         Utility method to convert any supported transcripts into WebVTT format.
 
@@ -271,7 +243,7 @@ class TranscriptsMixin(XBlock):
             lang (str)      : Iso code for language.
             lang_label (str): Name of language.
         Returns:
-            response (dict) : {'lang': lang, 'url': url, 'label': lang_label}
+            response (dict) : {"lang": lang, "url": url, "label": lang_label}
                 lang (str)  : Iso code for language.
                 url (str)   : External url for vtt file.
                 label (str) : Name of language.
@@ -286,16 +258,16 @@ class TranscriptsMixin(XBlock):
                 item = item[:29]
             out.append(item)
 
-        caps = '\n'.join(out).replace('\n&nbsp;', '')
+        caps = u'\n'.join(out).replace('\n&nbsp;', '')
         sub = self.convert_caps_to_vtt(caps=caps)
-        reference_name = '{lang_label}_captions_video_{video_id}'.format(
+        reference_name = "{lang_label}_captions_video_{video_id}".format(
             lang_label=lang_label, video_id=video_id
         ).encode('utf8')
         file_name, external_url = self.create_transcript_file(
             trans_str=sub, reference_name=reference_name
         )
         if file_name:
-            response = {'lang': lang, 'url': external_url, 'label': lang_label}
+            response = {"lang": lang, "url": external_url, "label": lang_label}
         return response
 
     def fetch_available_3pm_transcripts(self):
@@ -307,14 +279,10 @@ class TranscriptsMixin(XBlock):
         feedback, transcripts_list = self.get_3pm_transcripts_list(
             self.threeplaymedia_file_id, self.threeplaymedia_apikey
         )
-        log.debug('Fetched 3PM transcripts list results:\n{}'.format(feedback))
+        log.debug("Fetched 3PM transcripts list results:\n{}".format(feedback))
 
         if feedback['status'] is Status.error:
-            log.error(
-                '3PlayMedia transcripts fetching API request has failed!\n{}'.format(
-                    feedback['message']
-                )
-            )
+            log.error("3PlayMedia transcripts fetching API request has failed!\n{}".format(feedback['message']))
             return
 
         for transcript_data in transcripts_list:
@@ -334,8 +302,8 @@ class TranscriptsMixin(XBlock):
         domain = self.THREE_PLAY_MEDIA_API_DOMAIN
 
         transcripts_list = []
-        failure_message = _('3PlayMedia transcripts fetching API request has failed!')
-        success_message = _('3PlayMedia transcripts fetched successfully.')
+        failure_message = _("3PlayMedia transcripts fetching API request has failed!")
+        success_message = _("3PlayMedia transcripts fetched successfully.")
         feedback = {'status': Status.error, 'message': failure_message}
 
         try:
@@ -357,9 +325,7 @@ class TranscriptsMixin(XBlock):
             feedback['status'] = Status.error
         return feedback, transcripts_list
 
-    def fetch_single_3pm_translation(
-        self, transcript_data, format_id=TPMApiTranscriptFormatID.WEBVTT
-    ):
+    def fetch_single_3pm_translation(self, transcript_data, format_id=TPMApiTranscriptFormatID.WEBVTT):
         """
         Fetch single transcript for given file ID in given format.
 
@@ -374,16 +340,12 @@ class TranscriptsMixin(XBlock):
             file_id=self.threeplaymedia_file_id,
             tid=transcript_id,
             api_key=self.threeplaymedia_apikey,
-            format_id=format_id,
+            format_id=format_id
         )
         try:
             content = requests.get(external_api_url).text
         except Exception:  # pylint: disable=broad-except
-            log.exception(
-                _('Transcript fetching failure: language [{}]').format(
-                    TPMApiLanguage(lang_id)
-                )
-            )
+            log.exception(_("Transcript fetching failure: language [{}]").format(TPMApiLanguage(lang_id)))
             return
 
         lang_code = TPMApiLanguage(lang_id)
@@ -423,7 +385,7 @@ class TranscriptsMixin(XBlock):
         response = Response(transcript)
         headerlist = [
             ('Content-Type', 'text/plain'),
-            ('Content-Disposition', 'attachment; filename={}'.format(filename)),
+            ('Content-Disposition', 'attachment; filename={}'.format(filename))
         ]
         response.headerlist = headerlist
         return response
@@ -441,9 +403,7 @@ class TranscriptsMixin(XBlock):
             webob.Response: WebVTT transcripts wrapped in Response object.
         """
         lang_id, transcript_id = request.query_string.split('=')
-        transcript = self.fetch_single_3pm_translation(
-            transcript_data={'id': transcript_id, 'language_id': lang_id}
-        )
+        transcript = self.fetch_single_3pm_translation(transcript_data={'id': transcript_id, 'language_id': lang_id})
         if transcript is None:
             return Response()
         return Response(transcript.content, content_type='text/vtt')
@@ -461,9 +421,7 @@ class TranscriptsMixin(XBlock):
         """
         api_key = request.json.get('api_key')
         file_id = request.json.get('file_id')
-        streaming_enabled = bool(
-            int(request.json.get('streaming_enabled'))
-        )  # streaming_enabled is expected to be '1'
+        streaming_enabled = bool(int(request.json.get('streaming_enabled')))  # streaming_enabled is expected to be "1"
 
         is_valid = True
         success_message = _('Success')
@@ -471,7 +429,7 @@ class TranscriptsMixin(XBlock):
 
         # the very first request during xblock creating:
         if api_key is None and file_id is None:
-            return Response(json={'isValid': is_valid, 'message': _('Initialization')})
+            return Response(json={'isValid': is_valid, 'message': _("Initialization")})
 
         # the case when no options provided, and streaming is disabled:
         if not streaming_enabled:
@@ -503,25 +461,33 @@ class PlaybackStateMixin(XBlock):
     """
 
     current_time = Float(
-        default=0, scope=Scope.user_state, help='Seconds played back after the start'
+        default=0,
+        scope=Scope.user_state,
+        help='Seconds played back after the start'
     )
 
     playback_rate = Float(
         default=1,
         scope=Scope.preferences,
-        help='Supported video playbacks speeds are: 0.5, 1, 1.5, 2',
+        help='Supported video playbacks speeds are: 0.5, 1, 1.5, 2'
     )
 
-    volume = Float(default=1, scope=Scope.preferences, help='Video volume: from 0 to 1')
+    volume = Float(
+        default=1,
+        scope=Scope.preferences,
+        help='Video volume: from 0 to 1'
+    )
 
     muted = Boolean(
-        default=False, scope=Scope.preferences, help='Video is muted or not'
+        default=False,
+        scope=Scope.preferences,
+        help="Video is muted or not"
     )
 
     captions_language = String(
         default='',
         scope=Scope.preferences,
-        help='ISO code for the current language for captions and transcripts',
+        help="ISO code for the current language for captions and transcripts"
     )
 
     transcripts = String(
@@ -531,15 +497,19 @@ class PlaybackStateMixin(XBlock):
         help=_(
             'Add transcripts in different languages. Click below to specify a language and upload an .srt transcript'
             ' file for that language.'
-        ),
+        )
     )
 
     transcripts_enabled = Boolean(
-        default=False, scope=Scope.preferences, help='Transcripts are enabled or not'
+        default=False,
+        scope=Scope.preferences,
+        help="Transcripts are enabled or not"
     )
 
     captions_enabled = Boolean(
-        default=False, scope=Scope.preferences, help='Captions are enabled or not'
+        default=False,
+        scope=Scope.preferences,
+        help="Captions are enabled or not"
     )
 
     watch_progress = Float(
@@ -568,14 +538,8 @@ class PlaybackStateMixin(XBlock):
     )
 
     player_state_fields = (
-        'current_time',
-        'muted',
-        'playback_rate',
-        'volume',
-        'transcripts_enabled',
-        'captions_enabled',
-        'captions_language',
-        'transcripts',
+        'current_time', 'muted', 'playback_rate', 'volume', 'transcripts_enabled',
+        'captions_enabled', 'captions_language', 'transcripts',
         # 'max_played_time' must not be added to player_state_fields, it's calculated automatically from current_time
     )
 
@@ -587,9 +551,7 @@ class PlaybackStateMixin(XBlock):
         Falls back to 'en' if runtime doen't provide `modulestore` service.
         """
         try:
-            course = self.runtime.service(self, 'modulestore').get_course(
-                self.course_id
-            )
+            course = self.runtime.service(self, 'modulestore').get_course(self.course_id)
             return course.language
         except NoSuchServiceError:
             return DEFAULT_LANG
@@ -603,21 +565,17 @@ class PlaybackStateMixin(XBlock):
         transcripts_object = {
             trans['lang']: {'url': trans['url'], 'label': trans['label']}
             for trans in transcripts
-        }
+            }
         state = {
             'captionsLanguage': self.captions_language or self.course_default_language,
             'transcriptsObject': transcripts_object,
-            'transcripts': transcripts,
+            'transcripts': transcripts
         }
         for field_name in self.player_state_fields:
             mixedcase_field_name = underscore_to_mixedcase(field_name)
             state.setdefault(mixedcase_field_name, getattr(self, field_name))
-        state.setdefault(
-            underscore_to_mixedcase('max_played_time'), getattr(self, 'max_played_time')
-        )
-        state.setdefault(
-            'maxTimeForProgress', self.settings.get('max_time_for_progress', False)
-        )
+        state.setdefault(underscore_to_mixedcase('max_played_time'), getattr(self, 'max_played_time'))
+        state.setdefault('maxTimeForProgress', self.settings.get('max_time_for_progress', False))
 
         return state
 
@@ -666,7 +624,9 @@ class PlaybackStateMixin(XBlock):
         Returns:
             Data on success (dict).
         """
-        player_state = {'transcripts': self.transcripts}
+        player_state = {
+            'transcripts': self.transcripts
+        }
 
         for field_name in self.player_state_fields:
             if field_name not in player_state:
@@ -688,10 +648,10 @@ class SettingsMixin(XBlock):
     Provides convenient access to XBlock's settings set in edx-platform config files.
 
     Sample default settings in /edx/app/edxapp/cms.env.json:
-    'XBLOCK_SETTINGS': {
-        'video_xblock': {
-            'threeplaymedia_apikey': '987654321',
-            'account_id': '1234567890',
+    "XBLOCK_SETTINGS": {
+        "video_xblock": {
+            "threeplaymedia_apikey": "987654321",
+            "account_id": "1234567890",
         }
     }
     """
@@ -708,8 +668,8 @@ class SettingsMixin(XBlock):
         Returns:
             dict: Settings from config file. E.g.
             {
-                'threeplaymedia_apikey': '987654321',
-                'account_id': '1234567890'
+                "threeplaymedia_apikey": "987654321",
+                "account_id": "1234567890"
             }
         """
         settings = import_from('django.conf', 'settings')

@@ -11,7 +11,9 @@ def get_version(*file_paths):
     """
     filename = os.path.join(os.path.dirname(__file__), *file_paths)
     version_file = open(filename).read()
-    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]", version_file, re.M)
+    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]",
+                              version_file, re.M)
+
     if version_match:
         return version_match.group(1)
     raise RuntimeError('Unable to find version string.')
@@ -47,9 +49,7 @@ setup(
     ],
     install_requires=[
         'pycaption>=2.1.0,<3.0.0',
-        'requests>=2.9.1,<3.0.0',
         'babelfish>=0.6.0',
-        'Xblock>=4.0.1,<6.0.0',
     ],
     entry_points={
         'xblock.v1': [
@@ -63,10 +63,10 @@ setup(
             'dummy-player = video_xblock.backends.dummy:DummyPlayer',
             'vimeo-player = video_xblock.backends.vimeo:VimeoPlayer',
             'html5-player = video_xblock.backends.html5:Html5Player',
-        ],
+        ]
     },
-    package_data=package_data(
-        'video_xblock',
-        ['static', 'public', 'locale', 'translations', 'backends', 'workbench'],
-    ),
+    package_data=package_data("video_xblock", [
+        "static", "public", "locale", "translations",
+        "backends", "workbench"
+    ]),
 )

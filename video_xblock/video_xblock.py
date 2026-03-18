@@ -501,11 +501,20 @@ class VideoXBlock(
         current_time = float(data.get('current_time', 0))
         duration = float(data.get('duration', 0))
 
+        completion_threshold = 80.0 if self.completion_threshold is None else self.completion_threshold
+        completion_threshold = min(max(completion_threshold or 80.0, 0.0), 100.0)
+
         if duration <= 0:
             return {
                 'watch_progress': self.watch_progress,
                 'last_position': self.last_position,
-                'completed': self.watch_progress >= (self.completion_threshold / 100.0),
+                'completed': self.watch_progress >= (completion_threshold / 100.0),
+            }
+        if duration <= 0:
+            return {
+                'watch_progress': self.watch_progress,
+                'last_position': self.last_position,
+                'completed': self.watch_progress >= (completion_threshold / 100.0),
             }
 
         max_time_for_progress = self.settings.get('max_time_for_progress', False)
@@ -521,11 +530,11 @@ class VideoXBlock(
         self.last_position = current_time
 
         progress = min(effective_time / duration, 1.0)
-        was_completed = self.watch_progress >= (self.completion_threshold / 100.0)
+        was_completed = self.watch_progress >= (completion_threshold / 100.0)
         if progress > self.watch_progress:
             self.watch_progress = progress
 
-        threshold = self.completion_threshold / 100.0
+        threshold = completion_threshold / 100.0
         completed = self.watch_progress >= threshold
 
         if completed and not was_completed:

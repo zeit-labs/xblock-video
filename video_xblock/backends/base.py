@@ -138,7 +138,7 @@ class BaseVideoPlayer(Plugin):
         """
         return [
             'start_time', 'end_time', 'handout', 'download_transcript_allowed',
-            'download_video_allowed', 'download_video_url',
+            'download_video_allowed', 'download_video_url', 'completion_threshold',
         ]
 
     @property

@@ -389,7 +389,7 @@ class TranscriptsMixin(XBlock):
         ]
         response.headerlist = headerlist
         return response
-    
+
     @XBlock.handler
     def fetch_from_three_play_media(self, request, _suffix=''):
         """
@@ -512,10 +512,29 @@ class PlaybackStateMixin(XBlock):
         help="Captions are enabled or not"
     )
 
-    max_played_time = Float(
+    watch_progress = Float(
+        default=0, scope=Scope.user_state, help='Fraction of video watched (0.0 to 1.0)'
+    )
+
+    last_position = Float(
         default=0,
         scope=Scope.user_state,
-        help='Maximum time played back'
+        help='Last known playback position in seconds',
+    )
+
+    completion_threshold = Float(
+        default=80,
+        display_name=_('Completion threshold (%)'),
+        scope=Scope.content,
+        help=_(
+            'Percentage of the video a student must watch to receive completion credit. '
+            'Enter a value between 1 and 100. Default is 80.'
+        ),
+        values={'min': 1, 'max': 100},
+    )
+
+    max_played_time = Float(
+        default=0, scope=Scope.user_state, help='Maximum time played back'
     )
 
     player_state_fields = (
@@ -568,12 +587,31 @@ class PlaybackStateMixin(XBlock):
         Arguments:
             state (dict): Video player state key-value pairs.
         """
-        saved_max_played_time = self.max_played_time
         for field_name in self.player_state_fields:
             setattr(self, field_name, state.get(field_name, getattr(self, field_name)))
 
-        new_max_played_time = max(float(saved_max_played_time), state.get('current_time', getattr(self, 'current_time')))
-        setattr(self, 'max_played_time', new_max_played_time)
+        # Advance max_played_time only if max_time_for_progress is enabled
+        # and the new position is within a reasonable tolerance of the current
+        # max. This prevents seek-to-skip: a student jumping from 30s to 240s
+        # won't move max_played_time, but natural playback (5s ticks) will.
+        if self.settings.get('max_time_for_progress', False):
+            current_time = float(
+                state.get('current_time', getattr(self, 'current_time'))
+            )
+            saved_max = float(self.max_played_time)
+            max_played_time_tolerance = (
+                15  # seconds — generous enough for 5s ping + buffering
+            )
+            if current_time <= saved_max + max_played_time_tolerance:
+                self.max_played_time = max(saved_max, current_time)
+        else:
+            # Feature disabled — keep the original (uncapped) behaviour so
+            # max_played_time stays in sync for when the feature is toggled on.
+            saved_max = float(self.max_played_time)
+            current_time = float(
+                state.get('current_time', getattr(self, 'current_time'))
+            )
+            self.max_played_time = max(saved_max, current_time)
 
     @XBlock.json_handler
     def save_player_state(self, request, _suffix=''):

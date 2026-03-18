@@ -19,6 +19,7 @@ function VideoXBlockStudentViewInit(runtime, element) {
     var xblockElement = typeof(element[0]) !== 'undefined' ? element[0] : element;
     var stateHandlerUrl = runtime.handlerUrl(xblockElement, 'save_player_state');
     var eventHandlerUrl = runtime.handlerUrl(xblockElement, 'publish_event');
+    var progressHandlerUrl = runtime.handlerUrl(xblockElement, 'update_progress');
     var downloadTranscriptHandlerUrl = runtime.handlerUrl(xblockElement, 'download_transcript');
     var usageId = (
         xblockElement.attributes['data-usage-id'] ||  // Open edX runtime
@@ -29,10 +30,13 @@ function VideoXBlockStudentViewInit(runtime, element) {
         window.videoXBlockState.handlers || {
             saveState: {},
             analytics: {},
-            downloadTranscriptChanged: {}
+            downloadTranscriptChanged: {},
+            updateProgress: {}
         };
     handlers.saveState[usageId] = stateHandlerUrl;
     handlers.analytics[usageId] = eventHandlerUrl;
+    handlers.updateProgress[usageId] = progressHandlerUrl;
+
     /** Send data to server by POSTing it to appropriate VideoXBlock handler */
     function sendData(handlerUrl, data) {
         $.ajax({
@@ -40,7 +44,7 @@ function VideoXBlockStudentViewInit(runtime, element) {
             url: handlerUrl,
             data: JSON.stringify(data)
         })
-        .done(function() {
+        .done(function(response) {
             console.log('Data processed successfully.');  // eslint-disable-line no-console
         })
         .fail(function() {

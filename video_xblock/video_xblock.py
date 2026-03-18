@@ -21,6 +21,7 @@ import pkg_resources
 from django.utils.translation import get_language
 from opaque_keys.edx.keys import CourseKey
 from webob import Response
+from xblock.completable import XBlockCompletionMode
 from xblock.core import XBlock
 from xblock.fields import Boolean, Dict, Scope, String, List
 from web_fragments.fragment import Fragment
@@ -56,6 +57,7 @@ loader = ResourceLoader(__name__)
 log = logging.getLogger(__name__)
 
 
+@XBlock.wants('completion')
 @XBlock.needs('i18n')
 class VideoXBlock(
         SettingsMixin, TranscriptsMixin, PlaybackStateMixin, LocationMixin,
@@ -70,6 +72,8 @@ class VideoXBlock(
     See `BaseVideoPlayer.basic_fields` and `BaseVideoPlayer.advanced_fields`.
     """
 
+    has_custom_completion = True
+    completion_mode = XBlockCompletionMode.COMPLETABLE
     icon_class = "video"
 
     display_name = String(
@@ -470,6 +474,79 @@ class VideoXBlock(
 
         self.runtime.publish(self, event_type, data)
         return {'result': 'success'}
+
+    @XBlock.json_handler
+    def update_progress(self, data, _suffix=''):
+        """
+        Handle periodic progress pings from the video player.
+
+        Receives pings (every 5 seconds, plus on pause/ended) with the current
+        playback position and total duration. Updates watch_progress (fraction
+        watched) and last_position, and submits completion to the LMS when the
+        completion_threshold is reached.
+
+        When ``max_time_for_progress`` is enabled in XBLOCK_SETTINGS, the
+        reported ``current_time`` is capped at ``max_played_time`` so that
+        seeking ahead cannot inflate progress. ``max_played_time`` itself is
+        also advanced here (with a tolerance check) to keep it in sync with
+        natural playback.
+
+        Arguments:
+            data (dict): Must contain 'current_time' (float, seconds) and
+                         'duration' (float, seconds).
+            _suffix (string): Slug used for routing.
+        Returns:
+            dict: Updated watch_progress, last_position, and completion status.
+        """
+        current_time = float(data.get('current_time', 0))
+        duration = float(data.get('duration', 0))
+
+        if duration <= 0:
+            return {
+                'watch_progress': self.watch_progress,
+                'last_position': self.last_position,
+                'completed': self.watch_progress >= (self.completion_threshold / 100.0),
+            }
+
+        max_time_for_progress = self.settings.get('max_time_for_progress', False)
+        if max_time_for_progress:
+            saved_max = float(self.max_played_time)
+            max_played_time_tolerance = 15  # seconds
+            if current_time <= saved_max + max_played_time_tolerance:
+                self.max_played_time = max(saved_max, current_time)
+            effective_time = min(current_time, float(self.max_played_time))
+        else:
+            effective_time = current_time
+
+        self.last_position = current_time
+
+        progress = min(effective_time / duration, 1.0)
+        was_completed = self.watch_progress >= (self.completion_threshold / 100.0)
+        if progress > self.watch_progress:
+            self.watch_progress = progress
+
+        threshold = self.completion_threshold / 100.0
+        completed = self.watch_progress >= threshold
+
+        if completed and not was_completed:
+            completion_service = self.runtime.service(self, 'completion')
+            if completion_service:
+                try:
+                    completion_service.submit_completion(
+                        block_key=self.scope_ids.usage_id,
+                        completion=1.0,
+                    )
+                except Exception:  # noqa: BLE001
+                    log.exception(
+                        'Failed to submit completion for %s',
+                        self.scope_ids.usage_id,
+                    )
+
+        return {
+            'watch_progress': self.watch_progress,
+            'last_position': self.last_position,
+            'completed': completed,
+        }
 
     def clean_studio_edits(self, data):
         """

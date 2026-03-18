@@ -1,3 +1,5 @@
+{% load video_xblock_tags %}
+
 <input
   type="number"
   class="field-data-control"
@@ -5,5 +7,10 @@
   {% if field.step %} step="{{field.step}}" {% elif field.type == "integer" %} step=1 {% endif %}
   {% if field.max %} max="{{field.max}}" {% endif %}
   {% if field.min %} min="{{field.min}}" {% endif %}
-  value="{{field.value|default_if_none:""}}"
+  value="{{ field.value|default_if_none:""|neutral_decimal }}"
+  oninput="
+    var v = parseFloat(this.value);
+    {% if field.max %} if (v > {{field.max}}) this.value = {{field.max}}; {% endif %}
+    {% if field.min %} if (v < {{field.min}}) this.value = {{field.min}}; {% endif %}
+  "
 >

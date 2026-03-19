@@ -502,7 +502,7 @@ class VideoXBlock(
         duration = float(data.get('duration', 0))
 
         completion_threshold = 80.0 if self.completion_threshold is None else self.completion_threshold
-        completion_threshold = min(max(completion_threshold or 80.0, 0.0), 100.0)
+        completion_threshold = min(max(completion_threshold or 80.0, 1.0), 100.0)
 
         if duration <= 0:
             return {

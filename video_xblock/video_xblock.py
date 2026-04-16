@@ -187,8 +187,8 @@ class VideoXBlock(
         display_name=_('Default Timed Transcript'),
         help=_(
             'Default transcripts are uploaded automatically from a video platform '
-            'to the list of available transcripts.<br/>'
-            '<b>Note: valid "Video API Token" should be given in order to make auto fetching possible.</b><br/>'
+            'to the list of available transcripts. '
+            'Note: valid "Video API Token" should be given in order to make auto fetching possible. '
             'Advice: disable transcripts displaying on your video service to avoid transcripts overlapping.'
         ),
         resettable_editor=False

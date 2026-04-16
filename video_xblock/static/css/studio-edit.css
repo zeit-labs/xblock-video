@@ -305,3 +305,7 @@
 .language-transcript-selector .list-settings-buttons .download-setting {
   width: 49%;
 }
+
+.wrapper-xblock .xblock-header-primary .header-actions {
+  text-align: left;
+}

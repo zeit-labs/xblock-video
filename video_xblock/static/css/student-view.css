@@ -82,3 +82,11 @@
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+[dir=rtl] .wrapper-xblock .xblock-header-primary .header-actions {
+    text-align: left;
+}
+
+[class*="view-"] .wrapper .wrapper-xblock.level-element {
+    margin: 2rem;
+}

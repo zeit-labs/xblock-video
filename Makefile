@@ -104,16 +104,19 @@ I18N_CONFIG_PATH = translations/config.yaml
 
 
 extract_translations: ## extract strings to be translated, outputting .po files
-	cd $(WORKING_DIR) && i18n_tool extract
-	mv $(EXTRACTED_DJANGO) $(EXTRACTED_TEXT)
-	tail -n +20 $(EXTRACTED_DJANGOJS) >> $(EXTRACTED_TEXT)
-	rm $(EXTRACTED_DJANGOJS)
-	sed -i'' -e 's/nplurals=INTEGER/nplurals=2/' $(EXTRACTED_TEXT)
-	sed -i'' -e 's/plural=EXPRESSION/plural=\(n != 1\)/' $(EXTRACTED_TEXT)
+	# cd $(WORKING_DIR) && i18n_tool extract
+	# mv $(EXTRACTED_DJANGO) $(EXTRACTED_TEXT)
+	# tail -n +20 $(EXTRACTED_DJANGOJS) >> $(EXTRACTED_TEXT)
+	# rm $(EXTRACTED_DJANGOJS)
+	# msguniq $(EXTRACTED_TEXT) -o $(EXTRACTED_TEXT)
+	# sed -i'' -e 's/nplurals=INTEGER/nplurals=2/' $(EXTRACTED_TEXT)
+	# sed -i'' -e 's/plural=EXPRESSION/plural=\(n != 1\)/' $(EXTRACTED_TEXT)
+	cd $(WORKING_DIR) && i18n_tool extract --no-segment --merge-po-files
+	mv $(EXTRACT_DIR)/django.po $(EXTRACT_DIR)/text.po
 
 compile_translations: ## compile translation files, outputting .mo files for each supported language
 	cd $(WORKING_DIR) && i18n_tool generate -c $(I18N_CONFIG_PATH)
-	python manage.py compilejsi18n --output $(JS_TARGET)
+	# python manage.py compilejsi18n --namespace VideoXBlockI18N --output $(JS_TARGET)
 
 dummy_translations: ## generate dummy translation (.po) files
 	cd $(WORKING_DIR) && i18n_tool dummy

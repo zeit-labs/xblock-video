@@ -162,21 +162,21 @@ msgstr ""
 
 #: mixins.py:79
 msgid "3PlayMedia API Key"
-msgstr ""
+msgstr "مفتاح واجهة برمجة التطبيقات 3Play Media"
 
 #: mixins.py:80 video_xblock.py:200
 msgid ""
 "You can generate a client token following official documentation of your "
 "video platform's API."
-msgstr ""
+msgstr "يمكنك إنشاء رمز عميل (Client Token) باتباع التوثيق الرسمي لواجهة برمجة التطبيقات الخاصة بمنصة الفيديو لديك."
 
 #: mixins.py:87
 msgid "File Id"
-msgstr ""
+msgstr "معرّف الملف"
 
 #: mixins.py:88
 msgid "3playmedia file id for download bind transcripts."
-msgstr ""
+msgstr "معرّف ملف 3Play Media لتنزيل النصوص المرفقة."
 
 #: mixins.py:305 tests/unit/test_mixins.py:573
 msgid "3PlayMedia transcripts fetching API request has failed!"
@@ -204,23 +204,21 @@ msgstr ""
 
 #: mixins.py:496
 msgid "Enabled transcripts"
-msgstr ""
+msgstr "تمكين النصوص"
 
 #: mixins.py:498
-msgid ""
-"Add transcripts in different languages. Click below to specify a language "
-"and upload an .srt transcript file for that language."
-msgstr ""
+msgid "Add transcripts in different languages. Click below to specify a language and upload an .srt transcript file for that language."
+msgstr "أضف نصوصًا بلغات مختلفة. انقر أدناه لتحديد اللغة ورفع ملف .srt الخاص بالنص لتلك اللغة."
 
 #: mixins.py:527
 msgid "Completion threshold (%)"
-msgstr ""
+msgstr "نسبة إتمام المشاهدة (%)"
 
 #: mixins.py:530
 msgid ""
 "Percentage of the video a student must watch to receive completion credit. "
 "Enter a value between 1 and 100. Default is 80."
-msgstr ""
+msgstr "النسبة المئوية من الفيديو التي يجب على الطالب مشاهدتها للحصول على اعتماد الإكمال. أدخل قيمة بين 1 و100. القيمة الافتراضية هي 80."
 
 #: static/html/fields/file-uploader.html:3
 #: static/html/studio-edit-transcripts.html:15
@@ -231,13 +229,13 @@ msgstr ""
 #: static/html/fields/file-uploader.html:3
 #: static/html/studio-edit-transcripts.html:30
 msgid "Upload"
-msgstr ""
+msgstr "رفع"
 
 #: static/html/fields/file-uploader.html:4
 #: static/html/studio-edit-default-transcripts.html:21
 #: static/html/studio-edit-transcripts.html:16
 msgid "Download"
-msgstr ""
+msgstr "تنزيل"
 
 #: static/html/fields/set.html:17
 msgid "None Available"
@@ -305,7 +303,7 @@ msgstr ""
 
 #: static/html/studio-edit-default-transcripts.html:5
 msgid "Show available default transcripts"
-msgstr ""
+msgstr "عرض النصوص الافتراضية المتاحة"
 
 #: static/html/studio-edit-default-transcripts.html:27
 msgid "Delete"
@@ -352,23 +350,22 @@ msgstr ""
 
 #: static/html/studio-edit-transcripts-accordion.html:5
 msgid "Manual & default transcripts"
-msgstr ""
+msgstr "الترجمات اليدوية والافتراضية"
 
-#: static/html/studio-edit-transcripts-accordion.html:28
 msgid "3PlayMedia transcripts"
-msgstr ""
+msgstr "نصوص 3PlayMedia"
 
 #: static/html/studio-edit-transcripts.html:40
 msgid "Add"
-msgstr ""
+msgstr "إضافة"
 
 #: static/html/studio-edit.html:11
 msgid "Save"
-msgstr ""
+msgstr "حفظ"
 
 #: static/html/studio-edit.html:14
 msgid "Cancel"
-msgstr ""
+msgstr "إلغاء"
 
 #: tests/unit/test_backends.py:251
 msgid "Not all the languages of transcripts fetched from video platform"
@@ -386,37 +383,37 @@ msgstr ""
 
 #: video_xblock.py:81
 msgid "Component Display Name"
-msgstr ""
+msgstr "اسم عرض المكوّن"
 
 #: video_xblock.py:82
 msgid ""
 "The name students see. This name appears in the course ribbon and as a "
 "header for the video."
-msgstr ""
+msgstr "الاسم الذي يراه الطلاب. يظهر هذا الاسم في شريط المقرر وكعنوان للفيديو."
 
 #: video_xblock.py:88
 msgid "Video URL or FileId"
-msgstr ""
+msgstr "رابط الفيديو أو معرّف الملف"
 
 #: video_xblock.py:90
 msgid ""
 "Video URL of the video page. E.g. https://example.wistia.com/"
 "medias/12345abcde<br/>FileId for Tencent Player E.g. 5285890799710670616"
-msgstr ""
+msgstr "رابط صفحة الفيديو. مثل: https://example.wistia.com/medias/12345abcde<br/>معرّف الملف لمشغّل Tencent مثل: 5285890799710670616"
 
 #: video_xblock.py:99
 msgid "Video Download Allowed"
-msgstr ""
+msgstr "السماح بتنزيل الفيديو"
 
 #: video_xblock.py:101
 msgid ""
 "Allow students to download this video if they cannot use the edX video "
 "player. A link to download the file appears below the video."
-msgstr ""
+msgstr "السماح للطلاب بتنزيل هذا الفيديو إذا لم يتمكنوا من استخدام مشغل فيديو edX. يظهر رابط لتنزيل الملف أسفل الفيديو."
 
 #: video_xblock.py:109
 msgid "Video file URL"
-msgstr ""
+msgstr "رابط ملف الفيديو"
 
 #: video_xblock.py:110
 msgid ""
@@ -424,7 +421,7 @@ msgid ""
 "in .mpeg, .mp4, .ogg, or .webm. (For browser compatibility, we strongly "
 "recommend .mp4 and .webm format.) To allow students to download these "
 "videos, set Video Download Allowed to True."
-msgstr ""
+msgstr "الرابط الذي قمت بنشر نسخ غير مستضافة من الفيديو عليه. يجب أن ينتهي الرابط بصيغة .mpeg أو .mp4 أو .ogg أو .webm. (لتوافق المتصفحات، نوصي بشدة باستخدام صيغتي .mp4 و .webm). للسماح للطلاب بتنزيل هذه الفيديوهات، قم بتعيين خيار \"السماح بتنزيل الفيديو\" إلى True."
 
 #: video_xblock.py:118
 msgid "Account Id"
@@ -462,7 +459,7 @@ msgstr ""
 
 #: video_xblock.py:149
 msgid "Video Start Time"
-msgstr ""
+msgstr "وقت بدء الفيديو"
 
 #: video_xblock.py:156
 msgid ""
@@ -473,19 +470,19 @@ msgstr ""
 
 #: video_xblock.py:160
 msgid "Video Stop Time"
-msgstr ""
+msgstr "وقت إيقاف الفيديو"
 
 #: video_xblock.py:168
 msgid "Upload handout"
-msgstr ""
+msgstr "رفع المادة التعليمية"
 
 #: video_xblock.py:169
 msgid "You can upload handout file for students"
-msgstr ""
+msgstr "يمكنك رفع ملف المادة التعليمية للطلاب"
 
 #: video_xblock.py:175
 msgid "Download Transcript Allowed"
-msgstr ""
+msgstr "السماح بتنزيل النص المزامن"
 
 #: video_xblock.py:177
 msgid ""
@@ -493,11 +490,11 @@ msgid ""
 "appears below the video. By default, the transcript is an .vtt or .srt file. "
 "If you want to provide the transcript for download in a different format, "
 "upload a file by using the Upload Handout field."
-msgstr ""
+msgstr "السماح للطلاب بتنزيل النص المزامن للفيديو. يظهر رابط لتنزيل الملف أسفل الفيديو. بشكل افتراضي يكون النص بصيغة .vtt أو .srt. إذا أردت توفير النص بصيغة مختلفة، قم برفع ملف باستخدام حقل رفع المادة التعليمية."
 
 #: video_xblock.py:187
 msgid "Default Timed Transcript"
-msgstr ""
+msgstr "النص المتزامن الافتراضي"
 
 #: video_xblock.py:189
 msgid ""
@@ -506,7 +503,7 @@ msgid ""
 "be given in order to make auto fetching possible.</b><br/>Advice: disable "
 "transcripts displaying on your video service to avoid transcripts "
 "overlapping."
-msgstr ""
+msgstr "يتم تحميل النصوص الافتراضية تلقائيًا من منصة الفيديو إلى قائمة النصوص المتاحة.<br/><b>ملاحظة: يجب إدخال رمز واجهة برمجة الفيديو (Video API Token) صالح لتمكين الجلب التلقائي.</b><br/>نصيحة: قم بتعطيل عرض النصوص في خدمة الفيديو الخاصة بك لتجنب تداخل النصوص."
 
 #: video_xblock.py:199
 msgid "Video API Token"

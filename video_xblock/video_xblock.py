@@ -498,6 +498,8 @@ class VideoXBlock(
         Returns:
             dict: Updated watch_progress, last_position, and completion status.
         """
+        def print(v1, v2=''):
+            log.info(v1 + str(v2))
         print('=========================DEBUG=============================')
         current_time = float(data.get('current_time', 0))
         duration = float(data.get('duration', 0))

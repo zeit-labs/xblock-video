@@ -125,7 +125,8 @@ var PlayerState = function(player, playerState) {
     var sendProgressPing = function() {
         var playerObj = player;
         var currentTime = playerObj.currentTime();
-        var duration = playerObj.duration();
+        // 5 seconds buffer to ensure that progress is not marked as the very end of the video
+        var duration = playerObj.duration() - 5;
         if (duration > 0) {
             parent.postMessage(
                 {
@@ -158,7 +159,8 @@ var PlayerState = function(player, playerState) {
     player.on('ended', function() {
         // Send a ping with duration as current_time to ensure 100% progress is recorded,
         // since currentTime() may already be 0 if the player loops immediately after ending.
-        var duration = player.duration();
+        // 5 seconds buffer to ensure that progress is not marked as the very end of the video
+        var duration = player.duration() - 5;
         if (duration > 0) {
             parent.postMessage(
                 {

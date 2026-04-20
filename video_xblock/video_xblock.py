@@ -498,11 +498,16 @@ class VideoXBlock(
         Returns:
             dict: Updated watch_progress, last_position, and completion status.
         """
+        print('=========================DEBUG=============================')
         current_time = float(data.get('current_time', 0))
         duration = float(data.get('duration', 0))
 
         completion_threshold = 80.0 if self.completion_threshold is None else self.completion_threshold
         completion_threshold = min(max(completion_threshold or 80.0, 1.0), 100.0)
+
+        print('---- current_time: ', current_time)
+        print('---- duration: ', duration)
+        print('---- completion_threshold: ', completion_threshold)
 
         if duration <= 0:
             return {
@@ -518,9 +523,14 @@ class VideoXBlock(
             }
 
         max_time_for_progress = self.settings.get('max_time_for_progress', False)
+        print('---- max_time_for_progress: ', max_time_for_progress)
+
         if max_time_for_progress:
             saved_max = float(self.max_played_time)
             max_played_time_tolerance = 15  # seconds
+            print('---- saved_max: ', saved_max)
+            print('---- current_time: ', current_time)
+            print('---- saved_max + max_played_time_tolerance: ', saved_max + max_played_time_tolerance)
             if current_time <= saved_max + max_played_time_tolerance:
                 self.max_played_time = max(saved_max, current_time)
             effective_time = min(current_time, float(self.max_played_time))
@@ -528,34 +538,47 @@ class VideoXBlock(
             effective_time = current_time
 
         self.last_position = current_time
+        print('---- effective_time: ', effective_time)
+        print('---- self.last_position: ', self.last_position)
+        print('---- self.max_played_time: ', self.max_played_time)
 
         progress = min(effective_time / duration, 1.0)
         was_completed = self.watch_progress >= (completion_threshold / 100.0)
+        print('---- progress: ', progress)
+        print('---- was_completed: ', was_completed)
         if progress > self.watch_progress:
             self.watch_progress = progress
 
         threshold = completion_threshold / 100.0
         completed = self.watch_progress >= threshold
+        print('---- self.watch_progress: ', self.watch_progress)
+        print('---- threshold: ', threshold)
+        print('---- completed: ', completed)
 
         if completed and not was_completed:
             completion_service = self.runtime.service(self, 'completion')
+            print('---- completed!!!!!!!!!!!!!!!!')
             if completion_service:
                 try:
                     completion_service.submit_completion(
                         block_key=self.scope_ids.usage_id,
                         completion=1.0,
                     )
+                    print('---- SAVED - completed!!!!!!!!!!!!!!!!')
                 except Exception:  # noqa: BLE001
                     log.exception(
                         'Failed to submit completion for %s',
                         self.scope_ids.usage_id,
                     )
 
-        return {
+        x = {
             'watch_progress': self.watch_progress,
             'last_position': self.last_position,
             'completed': completed,
         }
+        print('---- x: ', x)
+        print('=========================DEBUG=============================')
+        return x
 
     def clean_studio_edits(self, data):
         """

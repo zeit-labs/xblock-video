@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1a\n"
-"Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
-"POT-Creation-Date: 2023-06-13 08:00+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-23 11:33+0300\n"
 "PO-Revision-Date: 2023-06-13 09:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: openedx-translation <openedx-translation@googlegroups.com>\n"
@@ -162,21 +162,21 @@ msgstr ""
 
 #: mixins.py:79
 msgid "3PlayMedia API Key"
-msgstr "مفتاح واجهة برمجة التطبيقات 3Play Media"
+msgstr ""
 
 #: mixins.py:80 video_xblock.py:200
 msgid ""
 "You can generate a client token following official documentation of your "
 "video platform's API."
-msgstr "يمكنك إنشاء رمز عميل (Client Token) باتباع التوثيق الرسمي لواجهة برمجة التطبيقات الخاصة بمنصة الفيديو لديك."
+msgstr ""
 
 #: mixins.py:87
 msgid "File Id"
-msgstr "معرّف الملف"
+msgstr ""
 
 #: mixins.py:88
 msgid "3playmedia file id for download bind transcripts."
-msgstr "معرّف ملف 3Play Media لتنزيل النصوص المرفقة."
+msgstr ""
 
 #: mixins.py:305 tests/unit/test_mixins.py:573
 msgid "3PlayMedia transcripts fetching API request has failed!"
@@ -204,38 +204,39 @@ msgstr ""
 
 #: mixins.py:496
 msgid "Enabled transcripts"
-msgstr "تمكين النصوص"
+msgstr ""
 
 #: mixins.py:498
-msgid "Add transcripts in different languages. Click below to specify a language and upload an .srt transcript file for that language."
-msgstr "أضف نصوصًا بلغات مختلفة. انقر أدناه لتحديد اللغة ورفع ملف .srt الخاص بالنص لتلك اللغة."
+msgid ""
+"Add transcripts in different languages. Click below to specify a language "
+"and upload an .srt transcript file for that language."
+msgstr ""
 
 #: mixins.py:527
 msgid "Completion threshold (%)"
-msgstr "نسبة إتمام المشاهدة (%)"
+msgstr ""
 
 #: mixins.py:530
 msgid ""
 "Percentage of the video a student must watch to receive completion credit. "
 "Enter a value between 1 and 100. Default is 80."
-msgstr "النسبة المئوية من الفيديو التي يجب على الطالب مشاهدتها للحصول على اعتماد الإكمال. أدخل قيمة بين 1 و100. القيمة الافتراضية هي 80."
+msgstr ""
 
 #: static/html/fields/file-uploader.html:3
 #: static/html/studio-edit-transcripts.html:15
-#: static/js/studio-edit/transcripts-manual-upload.js:230
 msgid "Replace"
 msgstr ""
 
 #: static/html/fields/file-uploader.html:3
 #: static/html/studio-edit-transcripts.html:30
 msgid "Upload"
-msgstr "رفع"
+msgstr ""
 
 #: static/html/fields/file-uploader.html:4
 #: static/html/studio-edit-default-transcripts.html:21
 #: static/html/studio-edit-transcripts.html:16
 msgid "Download"
-msgstr "تنزيل"
+msgstr ""
 
 #: static/html/fields/set.html:17
 msgid "None Available"
@@ -303,7 +304,7 @@ msgstr ""
 
 #: static/html/studio-edit-default-transcripts.html:5
 msgid "Show available default transcripts"
-msgstr "عرض النصوص الافتراضية المتاحة"
+msgstr ""
 
 #: static/html/studio-edit-default-transcripts.html:27
 msgid "Delete"
@@ -350,22 +351,23 @@ msgstr ""
 
 #: static/html/studio-edit-transcripts-accordion.html:5
 msgid "Manual & default transcripts"
-msgstr "الترجمات اليدوية والافتراضية"
+msgstr ""
 
+#: static/html/studio-edit-transcripts-accordion.html:28
 msgid "3PlayMedia transcripts"
-msgstr "نصوص 3PlayMedia"
+msgstr ""
 
 #: static/html/studio-edit-transcripts.html:40
 msgid "Add"
-msgstr "إضافة"
+msgstr ""
 
 #: static/html/studio-edit.html:11
 msgid "Save"
-msgstr "حفظ"
+msgstr ""
 
 #: static/html/studio-edit.html:14
 msgid "Cancel"
-msgstr "إلغاء"
+msgstr ""
 
 #: tests/unit/test_backends.py:251
 msgid "Not all the languages of transcripts fetched from video platform"
@@ -383,37 +385,37 @@ msgstr ""
 
 #: video_xblock.py:81
 msgid "Component Display Name"
-msgstr "اسم عرض المكوّن"
+msgstr ""
 
 #: video_xblock.py:82
 msgid ""
 "The name students see. This name appears in the course ribbon and as a "
 "header for the video."
-msgstr "الاسم الذي يراه الطلاب. يظهر هذا الاسم في شريط المقرر وكعنوان للفيديو."
+msgstr ""
 
 #: video_xblock.py:88
 msgid "Video URL or FileId"
-msgstr "رابط الفيديو أو معرّف الملف"
+msgstr ""
 
 #: video_xblock.py:90
 msgid ""
 "Video URL of the video page. E.g. https://example.wistia.com/"
 "medias/12345abcde<br/>FileId for Tencent Player E.g. 5285890799710670616"
-msgstr "رابط صفحة الفيديو. مثل: https://example.wistia.com/medias/12345abcde<br/>معرّف الملف لمشغّل Tencent مثل: 5285890799710670616"
+msgstr ""
 
 #: video_xblock.py:99
 msgid "Video Download Allowed"
-msgstr "السماح بتنزيل الفيديو"
+msgstr ""
 
 #: video_xblock.py:101
 msgid ""
 "Allow students to download this video if they cannot use the edX video "
 "player. A link to download the file appears below the video."
-msgstr "السماح للطلاب بتنزيل هذا الفيديو إذا لم يتمكنوا من استخدام مشغل فيديو edX. يظهر رابط لتنزيل الملف أسفل الفيديو."
+msgstr ""
 
 #: video_xblock.py:109
 msgid "Video file URL"
-msgstr "رابط ملف الفيديو"
+msgstr ""
 
 #: video_xblock.py:110
 msgid ""
@@ -421,7 +423,7 @@ msgid ""
 "in .mpeg, .mp4, .ogg, or .webm. (For browser compatibility, we strongly "
 "recommend .mp4 and .webm format.) To allow students to download these "
 "videos, set Video Download Allowed to True."
-msgstr "الرابط الذي قمت بنشر نسخ غير مستضافة من الفيديو عليه. يجب أن ينتهي الرابط بصيغة .mpeg أو .mp4 أو .ogg أو .webm. (لتوافق المتصفحات، نوصي بشدة باستخدام صيغتي .mp4 و .webm). للسماح للطلاب بتنزيل هذه الفيديوهات، قم بتعيين خيار \"السماح بتنزيل الفيديو\" إلى True."
+msgstr ""
 
 #: video_xblock.py:118
 msgid "Account Id"
@@ -459,7 +461,7 @@ msgstr ""
 
 #: video_xblock.py:149
 msgid "Video Start Time"
-msgstr "وقت بدء الفيديو"
+msgstr ""
 
 #: video_xblock.py:156
 msgid ""
@@ -470,19 +472,19 @@ msgstr ""
 
 #: video_xblock.py:160
 msgid "Video Stop Time"
-msgstr "وقت إيقاف الفيديو"
+msgstr ""
 
 #: video_xblock.py:168
 msgid "Upload handout"
-msgstr "رفع المادة التعليمية"
+msgstr ""
 
 #: video_xblock.py:169
 msgid "You can upload handout file for students"
-msgstr "يمكنك رفع ملف المادة التعليمية للطلاب"
+msgstr ""
 
 #: video_xblock.py:175
 msgid "Download Transcript Allowed"
-msgstr "السماح بتنزيل النص المزامن"
+msgstr ""
 
 #: video_xblock.py:177
 msgid ""
@@ -490,20 +492,19 @@ msgid ""
 "appears below the video. By default, the transcript is an .vtt or .srt file. "
 "If you want to provide the transcript for download in a different format, "
 "upload a file by using the Upload Handout field."
-msgstr "السماح للطلاب بتنزيل النص المزامن للفيديو. يظهر رابط لتنزيل الملف أسفل الفيديو. بشكل افتراضي يكون النص بصيغة .vtt أو .srt. إذا أردت توفير النص بصيغة مختلفة، قم برفع ملف باستخدام حقل رفع المادة التعليمية."
+msgstr ""
 
 #: video_xblock.py:187
 msgid "Default Timed Transcript"
-msgstr "النص المتزامن الافتراضي"
+msgstr ""
 
 #: video_xblock.py:189
 msgid ""
 "Default transcripts are uploaded automatically from a video platform to the "
-"list of available transcripts.<br/><b>Note: valid \"Video API Token\" should "
-"be given in order to make auto fetching possible.</b><br/>Advice: disable "
-"transcripts displaying on your video service to avoid transcripts "
-"overlapping."
-msgstr "يتم تحميل النصوص الافتراضية تلقائيًا من منصة الفيديو إلى قائمة النصوص المتاحة.<br/><b>ملاحظة: يجب إدخال رمز واجهة برمجة الفيديو (Video API Token) صالح لتمكين الجلب التلقائي.</b><br/>نصيحة: قم بتعطيل عرض النصوص في خدمة الفيديو الخاصة بك لتجنب تداخل النصوص."
+"list of available transcripts. Note: valid \"Video API Token\" should be "
+"given in order to make auto fetching possible. Advice: disable transcripts "
+"displaying on your video service to avoid transcripts overlapping."
+msgstr ""
 
 #: video_xblock.py:199
 msgid "Video API Token"
@@ -528,60 +529,14 @@ msgstr ""
 msgid "Failed to fetch default transcripts."
 msgstr ""
 
-#: video_xblock.py:872
+#: video_xblock.py:868
 msgid "Failed to convert file."
 msgstr ""
 
-#: video_xblock.py:891
+#: video_xblock.py:887
 msgid "Upload completed"
 msgstr ""
 
-#: video_xblock.py:921
+#: video_xblock.py:917
 msgid "Couldn't upload transcript text."
-msgstr ""
-
-#: static/js/studio-edit/studio-edit.js:16
-msgid ""
-"This may be happening because of an error with our server or your internet "
-"connection. Try refreshing the page or making sure you are online."
-msgstr ""
-
-#: static/js/studio-edit/studio-edit.js:379
-msgid "Saving"
-msgstr ""
-
-#: static/js/studio-edit/studio-edit.js:393
-#: static/js/studio-edit/studio-edit.js:416
-#: static/js/studio-edit/studio-edit.js:425
-#: static/js/studio-edit/studio-edit.js:503
-#: static/js/studio-edit/studio-edit.js:617
-msgid "Unable to update settings"
-msgstr ""
-
-#: static/js/studio-edit/studio-edit.js:532
-msgid "File \"{filename}\" uploaded successfully"
-msgstr ""
-
-#: static/js/studio-edit/studio-edit.js:618
-msgid ""
-"Failed to upload file. Please try another file or contact the platform "
-"administrator."
-msgstr ""
-
-#: static/js/studio-edit/transcripts-autoload.js:170
-msgid ""
-"{langLabel} transcripts are successfully removed from the list of enabled "
-"ones."
-msgstr ""
-
-#: static/js/studio-edit/transcripts-autoload.js:173
-msgid ""
-"{langLabel} transcripts are removed, but can not be uploaded from the video "
-"platform."
-msgstr ""
-
-#: static/js/studio-edit/transcripts-autoload.js:176
-msgid ""
-"{langLabel} transcripts are not neither removed nor added to the list of "
-"available ones."
 msgstr ""

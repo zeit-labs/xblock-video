@@ -66,7 +66,6 @@ setup(
         ]
     },
     package_data=package_data("video_xblock", [
-        "static", "public", "locale", "translations",
-        "backends", "workbench"
+        "static", "public", "conf", "backends", "workbench"
     ]),
 )

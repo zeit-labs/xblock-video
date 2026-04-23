@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1a\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-23 11:33+0300\n"
+"Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
+"POT-Creation-Date: 2023-06-13 08:00+0000\n"
 "PO-Revision-Date: 2023-06-13 09:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: openedx-translation <openedx-translation@googlegroups.com>\n"
@@ -224,6 +224,7 @@ msgstr ""
 
 #: static/html/fields/file-uploader.html:3
 #: static/html/studio-edit-transcripts.html:15
+#: static/js/studio-edit/transcripts-manual-upload.js:230
 msgid "Replace"
 msgstr ""
 
@@ -539,4 +540,50 @@ msgstr ""
 
 #: video_xblock.py:917
 msgid "Couldn't upload transcript text."
+msgstr ""
+
+#: static/js/studio-edit/studio-edit.js:16
+msgid ""
+"This may be happening because of an error with our server or your internet "
+"connection. Try refreshing the page or making sure you are online."
+msgstr ""
+
+#: static/js/studio-edit/studio-edit.js:379
+msgid "Saving"
+msgstr ""
+
+#: static/js/studio-edit/studio-edit.js:393
+#: static/js/studio-edit/studio-edit.js:416
+#: static/js/studio-edit/studio-edit.js:425
+#: static/js/studio-edit/studio-edit.js:503
+#: static/js/studio-edit/studio-edit.js:617
+msgid "Unable to update settings"
+msgstr ""
+
+#: static/js/studio-edit/studio-edit.js:532
+msgid "File \"{filename}\" uploaded successfully"
+msgstr ""
+
+#: static/js/studio-edit/studio-edit.js:618
+msgid ""
+"Failed to upload file. Please try another file or contact the platform "
+"administrator."
+msgstr ""
+
+#: static/js/studio-edit/transcripts-autoload.js:170
+msgid ""
+"{langLabel} transcripts are successfully removed from the list of enabled "
+"ones."
+msgstr ""
+
+#: static/js/studio-edit/transcripts-autoload.js:173
+msgid ""
+"{langLabel} transcripts are removed, but can not be uploaded from the video "
+"platform."
+msgstr ""
+
+#: static/js/studio-edit/transcripts-autoload.js:176
+msgid ""
+"{langLabel} transcripts are not neither removed nor added to the list of "
+"available ones."
 msgstr ""

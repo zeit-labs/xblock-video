@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1a\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-23 11:33+0300\n"
+"Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
+"POT-Creation-Date: 2023-06-13 08:00+0000\n"
 "PO-Revision-Date: 2023-06-13 09:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: openedx-translation <openedx-translation@googlegroups.com>\n"
@@ -22,74 +22,82 @@ msgid ""
 "Not all the languages of transcripts fetched from video platform are "
 "consistent with the pre-configured ALL_LANGUAGES"
 msgstr ""
+"ليست كل لغات النصوص المزامنة التي جرى جلبها من منصة الفيديو متوافقة مع "
+"ALL_LANGUAGES المعدّة مسبقًا"
 
 #: backends/brightcove.py:29
+#, fuzzy
 msgid "Brightcove API error."
-msgstr ""
+msgstr "خطأ في واجهة برمجة تطبيقات Vimeo."
 
 #: backends/brightcove.py:114
 msgid "Connection issue. Couldn't refresh API access token."
-msgstr ""
+msgstr "مشكلة في الاتصال. تعذر تحديث رمز وصول واجهة برمجة التطبيقات."
 
 #: backends/brightcove.py:171
 msgid "Can't parse unexpected response during POST request to Brightcove API!"
 msgstr ""
+"تعذر تحليل استجابة غير متوقعة أثناء طلب POST إلى واجهة برمجة تطبيقات "
+"Brightcove!"
 
 #: backends/brightcove.py:415
 msgid ""
 "Account ID can not be empty. Please provide a valid Brightcove Account ID."
 msgstr ""
+"لا يمكن أن يكون معرّف الحساب فارغًا. يرجى تقديم معرّف حساب Brightcove صالح."
 
 #: backends/brightcove.py:423
 msgid "Invalid Account ID or Player ID, please recheck."
-msgstr ""
+msgstr "معرّف الحساب أو معرّف المشغّل غير صالح، يرجى إعادة التحقق."
 
 #: backends/brightcove.py:429
 msgid ""
 "Can't validate submitted account ID at the moment. Please try to save "
 "settings one more time."
 msgstr ""
+"يتعذر التحقق من معرّف الحساب المُرسل في الوقت الحالي. يرجى محاولة حفظ "
+"الإعدادات مرة أخرى."
 
 #: backends/brightcove.py:521 backends/brightcove.py:612
 msgid "No API credentials provided"
-msgstr ""
+msgstr "لم يتم توفير بيانات اعتماد API"
 
 #: backends/brightcove.py:623 backends/brightcove.py:627
 msgid "No timed transcript may be fetched from a video platform."
-msgstr ""
+msgstr "لا يمكن جلب أي نص مزامن من منصة الفيديو."
 
 #: backends/brightcove.py:634 backends/wistia.py:213
 msgid ""
 "For now, video platform doesn't have any timed transcript for this video."
-msgstr ""
+msgstr "في الوقت الحالي، لا تحتوي منصة الفيديو على أي نص مزامن لهذا الفيديو."
 
 #: backends/brightcove.py:662 backends/youtube.py:226
 msgid "`url` parameter is required."
-msgstr ""
+msgstr "المعامل `url` مطلوب."
 
 #: backends/tencent.py:27
 msgid "Your FileID of the video to be played. E.g. 5285890799710670616"
-msgstr ""
+msgstr "معرّف الملف (FileID) للفيديو المراد تشغيله. مثال: 5285890799710670616"
 
 #: backends/tencent.py:51
 msgid "AppID can not be empty. Please provide a valid Tencent AppID."
-msgstr ""
+msgstr "لا يمكن أن يكون AppID فارغًا. يرجى تقديم Tencent AppID صالح."
 
 #: backends/vimeo.py:25
 msgid "Vimeo API error."
-msgstr ""
+msgstr "خطأ في واجهة برمجة تطبيقات Vimeo."
 
 #: backends/vimeo.py:63
 msgid "Can't fetch requested data from API."
-msgstr ""
+msgstr "تعذر جلب البيانات المطلوبة من واجهة برمجة التطبيقات."
 
 #: backends/vimeo.py:69
 msgid "Advanced API operations not allowed for now."
-msgstr ""
+msgstr "عمليات واجهة برمجة التطبيقات المتقدمة غير مسموح بها حاليًا."
 
 #: backends/vimeo.py:142
 msgid "URL of the video page. E.g. https://vimeo.com/987654321"
-msgstr ""
+msgstr "رابط صفحة الفيديو. مثال: https://vimeo.com/987654321"
 
 #: backends/vimeo.py:144
 msgid ""
@@ -98,67 +106,75 @@ msgid ""
 "new\" target=\"_blank\">creating new app</a>. Please ensure appropriate "
 "operations scope (\"private\") has been set for access token."
 msgstr ""
+"يمكنك إنشاء رمز وصول Vimeo عبر <b>قسم المصادقة في لوحة التطبيق</b> من خلال "
+"<a href=\"https://developer.vimeo.com/apps/new\" target=\"_blank\">إنشاء "
+"تطبيق جديد</a>. يرجى التأكد من تعيين نطاق العمليات المناسب (\"private\") "
+"لرمز الوصول."
 
 #: backends/vimeo.py:218 tests/unit/test_backends.py:593
 msgid "No API credentials provided."
-msgstr ""
+msgstr "لم يتم توفير بيانات اعتماد API."
 
 #: backends/vimeo.py:222 tests/unit/test_backends.py:570
 msgid "Default transcripts successfully fetched from a video platform."
-msgstr ""
+msgstr "تم جلب النصوص الافتراضية بنجاح من منصة الفيديو."
 
 #: backends/vimeo.py:228 tests/unit/test_backends.py:610
 msgid "No timed transcript may be fetched from a video platform.<br>"
-msgstr ""
+msgstr "لا يمكن جلب أي نص مزامن من منصة الفيديو.<br>"
 
 #: backends/vimeo.py:232 tests/unit/test_backends.py:629
 msgid "There are no default transcripts for the video on the video platform."
-msgstr ""
+msgstr "لا توجد نصوص افتراضية لهذا الفيديو على منصة الفيديو."
 
 #: backends/vimeo.py:264
 msgid "Transcripts API has been changed."
-msgstr ""
+msgstr "تم تغيير واجهة برمجة تطبيقات النصوص."
 
 #: backends/wistia.py:181 tests/unit/test_backends.py:708
 #: tests/unit/test_backends.py:835
 msgid "Success."
-msgstr ""
+msgstr "نجاح."
 
 #: backends/wistia.py:189
 msgid ""
 "No timed transcript may be fetched from a video platform.\n"
 "Error details: {}"
 msgstr ""
+"لا يمكن جلب أي نص مزامن من منصة الفيديو.\n"
+"تفاصيل الخطأ: {}"
 
 #: backends/wistia.py:198
 msgid "Wistia video {} doesn't exist."
-msgstr ""
+msgstr "فيديو Wistia {} غير موجود."
 
 #: backends/wistia.py:203
 msgid "Invalid request."
-msgstr ""
+msgstr "طلب غير صالح."
 
 #: exceptions.py:15
 msgid "An exception occurred."
-msgstr ""
+msgstr "حدث استثناء."
 
 #: exceptions.py:43
 msgid "A Mock exception occurred."
-msgstr ""
+msgstr "حدث استثناء تجريبي."
 
 #: exceptions.py:51
 msgid "API error occurred."
-msgstr ""
+msgstr "حدث خطأ في واجهة برمجة التطبيقات."
 
 #: mixins.py:72
 msgid "Direct 3PlayMedia"
-msgstr ""
+msgstr "3PlayMedia المباشر"
 
 #: mixins.py:74
 msgid ""
 "Direct <a href='http://www.3playmedia.com/'>3PlayMedia</a> transcripts usage "
 "enabled."
 msgstr ""
+"تم تمكين استخدام نصوص <a href='http://www.3playmedia.com/'>3PlayMedia</a> "
+"المباشرة."
 
 #: mixins.py:79
 msgid "3PlayMedia API Key"
@@ -182,27 +198,27 @@ msgstr "معرّف ملف 3Play Media لتنزيل النصوص المرفقة."
 
 #: mixins.py:305 tests/unit/test_mixins.py:573
 msgid "3PlayMedia transcripts fetching API request has failed!"
-msgstr ""
+msgstr "فشل طلب واجهة برمجة التطبيقات لجلب نصوص 3PlayMedia!"
 
 #: mixins.py:306 tests/unit/test_mixins.py:547
 msgid "3PlayMedia transcripts fetched successfully."
-msgstr ""
+msgstr "تم جلب نصوص 3PlayMedia بنجاح."
 
 #: mixins.py:348
 msgid "Transcript fetching failure: language [{}]"
-msgstr ""
+msgstr "فشل جلب النصوص: اللغة [{}]"
 
 #: mixins.py:427 tests/unit/test_mixins.py:678 tests/unit/test_mixins.py:717
 msgid "Success"
-msgstr ""
+msgstr "نجاح"
 
 #: mixins.py:428 tests/unit/test_mixins.py:697
 msgid "Check provided 3PlayMedia configuration"
-msgstr ""
+msgstr "تحقق من إعدادات 3PlayMedia المقدمة"
 
 #: mixins.py:432 tests/unit/test_mixins.py:659
 msgid "Initialization"
-msgstr ""
+msgstr "التهيئة"
 
 #: mixins.py:496
 msgid "Enabled transcripts"
@@ -230,8 +246,9 @@ msgstr ""
 
 #: static/html/fields/file-uploader.html:3
 #: static/html/studio-edit-transcripts.html:15
+#: static/js/studio-edit/transcripts-manual-upload.js:230
 msgid "Replace"
-msgstr ""
+msgstr "استبدال"
 
 #: static/html/fields/file-uploader.html:3
 #: static/html/studio-edit-transcripts.html:30
@@ -246,67 +263,67 @@ msgstr "تنزيل"
 
 #: static/html/fields/set.html:17
 msgid "None Available"
-msgstr ""
+msgstr "لا يوجد متاح"
 
 #: static/html/student_view.html:21
 msgid "Download Handout"
-msgstr ""
+msgstr "تنزيل المادة التعليمية"
 
 #: static/html/student_view.html:29
 msgid "Download transcripts"
-msgstr ""
+msgstr "تنزيل النصوص"
 
 #: static/html/student_view.html:45
 msgid "Right-click and save link as to download file"
-msgstr ""
+msgstr "انقر بزر الماوس الأيمن واحفظ الرابط باسم لتنزيل الملف"
 
 #: static/html/student_view.html:46
 msgid "Download Video file"
-msgstr ""
+msgstr "تنزيل ملف الفيديو"
 
 #: static/html/studio-edit-3playmedia-apikey.html:5
 msgid "3playmedia Key"
-msgstr ""
+msgstr "مفتاح 3playmedia"
 
 #: static/html/studio-edit-brightcove-encryption.html:10
 msgid "Brightcove content protection"
-msgstr ""
+msgstr "حماية محتوى Brightcove"
 
 #: static/html/studio-edit-brightcove-encryption.html:14
 msgid "Video autoquality & encryption"
-msgstr ""
+msgstr "الجودة التلقائية للفيديو والتشفير"
 
 #: static/html/studio-edit-brightcove-encryption.html:18
 msgid "Default profile"
-msgstr ""
+msgstr "الملف الشخصي الافتراضي"
 
 #: static/html/studio-edit-brightcove-encryption.html:21
 msgid "Autoquality"
-msgstr ""
+msgstr "الجودة التلقائية"
 
 #: static/html/studio-edit-brightcove-encryption.html:24
 msgid "Autoquality & Encryption"
-msgstr ""
+msgstr "الجودة التلقائية والتشفير"
 
 #: static/html/studio-edit-brightcove-encryption.html:30
 msgid "Re-transcode this video"
-msgstr ""
+msgstr "أعد ترميز هذا الفيديو"
 
 #: static/html/studio-edit-brightcove-encryption.html:42
 msgid "Brightcove Video tech info"
-msgstr ""
+msgstr "المعلومات التقنية لفيديو Brightcove"
 
 #: static/html/studio-edit-brightcove-encryption.html:45
 msgid "Renditions count:"
-msgstr ""
+msgstr "عدد النُسخ:"
 
 #: static/html/studio-edit-brightcove-encryption.html:46
 msgid "Autoquality:"
-msgstr ""
+msgstr "الجودة التلقائية:"
 
 #: static/html/studio-edit-brightcove-encryption.html:47
 msgid "Encryption:"
-msgstr ""
+msgstr "التشفير:"
 
 #: static/html/studio-edit-default-transcripts.html:5
 msgid "Show available default transcripts"
@@ -314,46 +331,47 @@ msgstr "عرض النصوص الافتراضية المتاحة"
 
 #: static/html/studio-edit-default-transcripts.html:27
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 #: static/html/studio-edit-default-transcripts.html:50
 #: static/html/studio-edit-default-transcripts.html:69
 msgid "Fetch"
-msgstr ""
+msgstr "جلب"
 
 #: static/html/studio-edit-default-transcripts.html:77
 msgid "There are no transcripts to upload."
-msgstr ""
+msgstr "لا توجد نصوص لرفعها."
 
 #: static/html/studio-edit-default-transcripts.html:82
 msgid ""
 "You can manually add transcripts using the `+Add` button in \"Enabled "
 "transcript\" field."
 msgstr ""
+"يمكنك إضافة النصوص يدويًا باستخدام زر `+Add` في حقل \"Enabled transcript\"."
 
 #: static/html/studio-edit-tab.html:41
 msgid "Unsupported field type. This setting cannot be edited."
-msgstr ""
+msgstr "نوع الحقل غير مدعوم. لا يمكن تعديل هذا الإعداد."
 
 #: static/html/studio-edit-tab.html:45
 msgid "Clear"
-msgstr ""
+msgstr "مسح"
 
 #: static/html/studio-edit-tab.html:46
 msgid "Clear Value"
-msgstr ""
+msgstr "مسح القيمة"
 
 #: static/html/studio-edit-token.html:6
 msgid "Application Access Token"
-msgstr ""
+msgstr "رمز وصول التطبيق"
 
 #: static/html/studio-edit-token.html:8
 msgid "Client Token"
-msgstr ""
+msgstr "رمز العميل"
 
 #: static/html/studio-edit-token.html:20
 msgid "Connect to video platform"
-msgstr ""
+msgstr "الاتصال بمنصة الفيديو"
 
 #: static/html/studio-edit-transcripts-accordion.html:5
 msgid "Manual & default transcripts"
@@ -377,17 +395,19 @@ msgstr "إلغاء"
 
 #: tests/unit/test_backends.py:251
 msgid "Not all the languages of transcripts fetched from video platform"
-msgstr ""
+msgstr "ليست كل لغات النصوص المزامنة التي جرى جلبها من منصة الفيديو"
 
 #: tests/unit/test_backends.py:737
 msgid ""
 "No timed transcript may be fetched from a video platform.\n"
 "Error details: test_exc_message"
 msgstr ""
+"لا يمكن جلب أي نص مزامن من منصة الفيديو.\n"
+"تفاصيل الخطأ: test_exc_message"
 
 #: tests/unit/test_video_xblock.py:34 video_xblock.py:80
 msgid "Video"
-msgstr ""
+msgstr "فيديو"
 
 #: video_xblock.py:81
 msgid "Component Display Name"
@@ -441,23 +461,23 @@ msgstr ""
 
 #: video_xblock.py:118
 msgid "Account Id"
-msgstr ""
+msgstr "معرّف الحساب"
 
 #: video_xblock.py:119
 msgid "Your Brightcove account id"
-msgstr ""
+msgstr "معرّف حساب Brightcove الخاص بك"
 
 #: video_xblock.py:125
 msgid "AppID"
-msgstr ""
+msgstr "AppID"
 
 #: video_xblock.py:126
 msgid "Your AppID of the VOD account. E.g. 1400329073"
-msgstr ""
+msgstr "معرّف AppID الخاص بك لحساب VOD. مثال: 1400329073"
 
 #: video_xblock.py:132
 msgid "Player Id"
-msgstr ""
+msgstr "معرّف المشغّل"
 
 #: video_xblock.py:133
 msgid ""
@@ -465,6 +485,9 @@ msgid ""
 "choose one of your players from a <a href=\"https://studio.brightcove.com/"
 "products/videocloud/players\" target=\"_blank\">list</a>."
 msgstr ""
+"معرّف مشغّل Brightcove الخاص بك. استخدم سمة \"Luna\" لجميع مشغلاتك. يمكنك "
+"اختيار أحد مشغلاتك من <a href=\"https://studio.brightcove.com/products/"
+"videocloud/players\" target=\"_blank\">القائمة</a>."
 
 #: video_xblock.py:145
 msgid ""
@@ -472,6 +495,9 @@ msgid ""
 "Not supported in the native mobile app: the full video file will play. "
 "Formatted as HH:MM:SS. The maximum value is 23:59:59."
 msgstr ""
+"الوقت الذي تريد أن يبدأ عنده الفيديو إذا كنت لا تريد تشغيل الفيديو بالكامل. "
+"غير مدعوم في تطبيق الجوال الأصلي: سيتم تشغيل ملف الفيديو بالكامل. تكون "
+"الصيغة HH:MM:SS. القيمة القصوى هي 23:59:59."
 
 #: video_xblock.py:149
 msgid "Video Start Time"
@@ -483,6 +509,9 @@ msgid ""
 "Not supported in the native mobile app: the full video file will play. "
 "Formatted as HH:MM:SS. The maximum value is 23:59:59."
 msgstr ""
+"الوقت الذي تريد أن يتوقف عنده الفيديو إذا كنت لا تريد تشغيل الفيديو بالكامل. "
+"غير مدعوم في تطبيق الجوال الأصلي: سيتم تشغيل ملف الفيديو بالكامل. تكون "
+"الصيغة HH:MM:SS. القيمة القصوى هي 23:59:59."
 
 #: video_xblock.py:160
 msgid "Video Stop Time"
@@ -517,30 +546,23 @@ msgstr "النص المتزامن الافتراضي"
 
 #: video_xblock.py:189
 #, fuzzy
-#| msgid ""
-#| "Default transcripts are uploaded automatically from a video platform to "
-#| "the list of available transcripts.<br/><b>Note: valid \"Video API Token\" "
-#| "should be given in order to make auto fetching possible.</b><br/>Advice: "
-#| "disable transcripts displaying on your video service to avoid transcripts "
-#| "overlapping."
 msgid ""
 "Default transcripts are uploaded automatically from a video platform to the "
 "list of available transcripts. Note: valid \"Video API Token\" should be "
 "given in order to make auto fetching possible. Advice: disable transcripts "
 "displaying on your video service to avoid transcripts overlapping."
 msgstr ""
-"يتم تحميل النصوص الافتراضية تلقائيًا من منصة الفيديو إلى قائمة النصوص المتاحة."
-"<br/><b>ملاحظة: يجب إدخال رمز واجهة برمجة الفيديو (Video API Token) صالح "
-"لتمكين الجلب التلقائي.</b><br/>نصيحة: قم بتعطيل عرض النصوص في خدمة الفيديو "
-"الخاصة بك لتجنب تداخل النصوص."
+"يتم تحميل النصوص الافتراضية تلقائيًا من منصة الفيديو إلى قائمة النصوص "
+"المتاحة. ملاحظة: يجب إدخال \"Video API Token\" صالح لتمكين الجلب التلقائي. "
+"نصيحة: عطّل عرض النصوص في خدمة الفيديو الخاصة بك لتجنب تداخل النصوص."
 
 #: video_xblock.py:199
 msgid "Video API Token"
-msgstr ""
+msgstr "رمز واجهة برمجة الفيديو"
 
 #: video_xblock.py:207
 msgid "Metadata"
-msgstr ""
+msgstr "البيانات الوصفية"
 
 #: video_xblock.py:208
 msgid ""
@@ -548,23 +570,74 @@ msgid ""
 "metadata item is designed, this is to add an appropriate key to backend's "
 "`metadata_fields` property."
 msgstr ""
+"يخزن هذا الحقل بيانات وصفية مختلفة، مثل بيانات المصادقة. إذا تم تصميم عنصر "
+"بيانات وصفية جديد، فيجب إضافة المفتاح المناسب إلى الخاصية `metadata_fields` "
+"في الواجهة الخلفية."
 
 #: video_xblock.py:239
 msgid "Incorrect or unsupported video URL, please recheck."
-msgstr ""
+msgstr "رابط الفيديو غير صحيح أو غير مدعوم، يرجى إعادة التحقق."
 
 #: video_xblock.py:345
 msgid "Failed to fetch default transcripts."
-msgstr ""
+msgstr "فشل جلب النصوص الافتراضية."
 
 #: video_xblock.py:868
 msgid "Failed to convert file."
-msgstr ""
+msgstr "فشل تحويل الملف."
 
 #: video_xblock.py:887
 msgid "Upload completed"
-msgstr ""
+msgstr "اكتمل الرفع"
 
 #: video_xblock.py:917
 msgid "Couldn't upload transcript text."
-msgstr ""
+msgstr "تعذر رفع نص الترجمة."
+
+#: static/js/studio-edit/studio-edit.js:16
+msgid ""
+"This may be happening because of an error with our server or your internet "
+"connection. Try refreshing the page or making sure you are online."
+msgstr "ربما أن هذا قد يحدث بسبب وجود خطأ في خادمنا أو اتصال الإنترنت الخاص بك، يرجى محاولة تحديث الصفحة أو التأكد من أنك متصل بالإنترنت."
+
+#: static/js/studio-edit/studio-edit.js:379
+msgid "Saving"
+msgstr "جاري الحفظ"
+
+#: static/js/studio-edit/studio-edit.js:393
+#: static/js/studio-edit/studio-edit.js:416
+#: static/js/studio-edit/studio-edit.js:425
+#: static/js/studio-edit/studio-edit.js:503
+#: static/js/studio-edit/studio-edit.js:617
+msgid "Unable to update settings"
+msgstr "لم يتم تحديث الإعدادات"
+
+#: static/js/studio-edit/studio-edit.js:532
+msgid "File \"{filename}\" uploaded successfully"
+msgstr "الملف \"{filename}\" تم رفعه بنجاح"
+
+#: static/js/studio-edit/studio-edit.js:618
+msgid ""
+"Failed to upload file. Please try another file or contact the platform "
+"administrator."
+msgstr "فشل رفع الملف. يرجى تجربة ملف آخر أو الاتصال بمسؤول المنصة."
+
+#: static/js/studio-edit/transcripts-autoload.js:170
+#, fuzzy
+msgid ""
+"{langLabel} transcripts are successfully removed from the list of enabled "
+"ones."
+msgstr "تمت إزالة نصوص {langLabel} بنجاح من قائمة النصوص الممكّنة."
+
+#: static/js/studio-edit/transcripts-autoload.js:173
+#, fuzzy
+msgid ""
+"{langLabel} transcripts are removed, but can not be uploaded from the video "
+"platform."
+msgstr "تمت إزالة نصوص {langLabel}، ولكن لا يمكن رفعها من منصة الفيديو."
+
+#: static/js/studio-edit/transcripts-autoload.js:176
+msgid ""
+"{langLabel} transcripts are not neither removed nor added to the list of "
+"available ones."
+msgstr "لم يتم إزالة نصوص {langLabel} ولا إضافتها إلى قائمة النصوص المتاحة."

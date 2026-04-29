@@ -37,10 +37,12 @@ STATIC_URL = '/static/'
 
 LANGUAGES = [
     ('en', 'English'),
+    ('ar', 'Arabic'),
     # add supported languages here
 ]
 
 STATICI18N_DOMAIN = 'text'
+STATICI18N_NAMESPACE = 'VideoXBlockI18N'
 STATICI18N_PACKAGES = (
     'video_xblock',
 )

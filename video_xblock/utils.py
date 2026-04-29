@@ -8,6 +8,7 @@ from importlib import import_module
 from xml.sax.saxutils import unescape
 import os.path
 import pkg_resources
+from django.utils.translation import gettext_lazy
 
 from django.template import Engine, Context, Template
 from xblock.utils.resources import ResourceLoader
@@ -64,7 +65,7 @@ def ugettext(text):
     """
     Dummy ugettext method that doesn't do anything.
     """
-    return text
+    return gettext_lazy(text)
 
 
 def underscore_to_mixedcase(value):

@@ -1,0 +1,643 @@
+# edX translation file.
+# Copyright (C) 2026 EdX
+# This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
+# EdX Team <info@edx.org>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1a\n"
+"Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
+"POT-Creation-Date: 2023-06-13 08:00+0000\n"
+"PO-Revision-Date: 2023-06-13 09:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: openedx-translation <openedx-translation@googlegroups.com>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: backends/base.py:417
+msgid ""
+"Not all the languages of transcripts fetched from video platform are "
+"consistent with the pre-configured ALL_LANGUAGES"
+msgstr ""
+"ليست كل لغات النصوص المزامنة التي جرى جلبها من منصة الفيديو متوافقة مع "
+"ALL_LANGUAGES المعدّة مسبقًا"
+
+#: backends/brightcove.py:29
+#, fuzzy
+msgid "Brightcove API error."
+msgstr "خطأ في واجهة برمجة تطبيقات Vimeo."
+
+#: backends/brightcove.py:114
+msgid "Connection issue. Couldn't refresh API access token."
+msgstr "مشكلة في الاتصال. تعذر تحديث رمز وصول واجهة برمجة التطبيقات."
+
+#: backends/brightcove.py:171
+msgid "Can't parse unexpected response during POST request to Brightcove API!"
+msgstr ""
+"تعذر تحليل استجابة غير متوقعة أثناء طلب POST إلى واجهة برمجة تطبيقات "
+"Brightcove!"
+
+#: backends/brightcove.py:415
+msgid ""
+"Account ID can not be empty. Please provide a valid Brightcove Account ID."
+msgstr ""
+"لا يمكن أن يكون معرّف الحساب فارغًا. يرجى تقديم معرّف حساب Brightcove صالح."
+
+#: backends/brightcove.py:423
+msgid "Invalid Account ID or Player ID, please recheck."
+msgstr "معرّف الحساب أو معرّف المشغّل غير صالح، يرجى إعادة التحقق."
+
+#: backends/brightcove.py:429
+msgid ""
+"Can't validate submitted account ID at the moment. Please try to save "
+"settings one more time."
+msgstr ""
+"يتعذر التحقق من معرّف الحساب المُرسل في الوقت الحالي. يرجى محاولة حفظ "
+"الإعدادات مرة أخرى."
+
+#: backends/brightcove.py:521 backends/brightcove.py:612
+msgid "No API credentials provided"
+msgstr "لم يتم توفير بيانات اعتماد API"
+
+#: backends/brightcove.py:623 backends/brightcove.py:627
+msgid "No timed transcript may be fetched from a video platform."
+msgstr "لا يمكن جلب أي نص مزامن من منصة الفيديو."
+
+#: backends/brightcove.py:634 backends/wistia.py:213
+msgid ""
+"For now, video platform doesn't have any timed transcript for this video."
+msgstr "في الوقت الحالي، لا تحتوي منصة الفيديو على أي نص مزامن لهذا الفيديو."
+
+#: backends/brightcove.py:662 backends/youtube.py:226
+msgid "`url` parameter is required."
+msgstr "المعامل `url` مطلوب."
+
+#: backends/tencent.py:27
+msgid "Your FileID of the video to be played. E.g. 5285890799710670616"
+msgstr "معرّف الملف (FileID) للفيديو المراد تشغيله. مثال: 5285890799710670616"
+
+#: backends/tencent.py:51
+msgid "AppID can not be empty. Please provide a valid Tencent AppID."
+msgstr "لا يمكن أن يكون AppID فارغًا. يرجى تقديم Tencent AppID صالح."
+
+#: backends/vimeo.py:25
+msgid "Vimeo API error."
+msgstr "خطأ في واجهة برمجة تطبيقات Vimeo."
+
+#: backends/vimeo.py:63
+msgid "Can't fetch requested data from API."
+msgstr "تعذر جلب البيانات المطلوبة من واجهة برمجة التطبيقات."
+
+#: backends/vimeo.py:69
+msgid "Advanced API operations not allowed for now."
+msgstr "عمليات واجهة برمجة التطبيقات المتقدمة غير مسموح بها حاليًا."
+
+#: backends/vimeo.py:142
+msgid "URL of the video page. E.g. https://vimeo.com/987654321"
+msgstr "رابط صفحة الفيديو. مثال: https://vimeo.com/987654321"
+
+#: backends/vimeo.py:144
+msgid ""
+"You can generate a Vimeo access token via <b>Application console's "
+"Authentication section</b> by <a href=\"https://developer.vimeo.com/apps/"
+"new\" target=\"_blank\">creating new app</a>. Please ensure appropriate "
+"operations scope (\"private\") has been set for access token."
+msgstr ""
+"يمكنك إنشاء رمز وصول Vimeo عبر <b>قسم المصادقة في لوحة التطبيق</b> من خلال "
+"<a href=\"https://developer.vimeo.com/apps/new\" target=\"_blank\">إنشاء "
+"تطبيق جديد</a>. يرجى التأكد من تعيين نطاق العمليات المناسب (\"private\") "
+"لرمز الوصول."
+
+#: backends/vimeo.py:218 tests/unit/test_backends.py:593
+msgid "No API credentials provided."
+msgstr "لم يتم توفير بيانات اعتماد API."
+
+#: backends/vimeo.py:222 tests/unit/test_backends.py:570
+msgid "Default transcripts successfully fetched from a video platform."
+msgstr "تم جلب النصوص الافتراضية بنجاح من منصة الفيديو."
+
+#: backends/vimeo.py:228 tests/unit/test_backends.py:610
+msgid "No timed transcript may be fetched from a video platform.<br>"
+msgstr "لا يمكن جلب أي نص مزامن من منصة الفيديو.<br>"
+
+#: backends/vimeo.py:232 tests/unit/test_backends.py:629
+msgid "There are no default transcripts for the video on the video platform."
+msgstr "لا توجد نصوص افتراضية لهذا الفيديو على منصة الفيديو."
+
+#: backends/vimeo.py:264
+msgid "Transcripts API has been changed."
+msgstr "تم تغيير واجهة برمجة تطبيقات النصوص."
+
+#: backends/wistia.py:181 tests/unit/test_backends.py:708
+#: tests/unit/test_backends.py:835
+msgid "Success."
+msgstr "نجاح."
+
+#: backends/wistia.py:189
+msgid ""
+"No timed transcript may be fetched from a video platform.\n"
+"Error details: {}"
+msgstr ""
+"لا يمكن جلب أي نص مزامن من منصة الفيديو.\n"
+"تفاصيل الخطأ: {}"
+
+#: backends/wistia.py:198
+msgid "Wistia video {} doesn't exist."
+msgstr "فيديو Wistia {} غير موجود."
+
+#: backends/wistia.py:203
+msgid "Invalid request."
+msgstr "طلب غير صالح."
+
+#: exceptions.py:15
+msgid "An exception occurred."
+msgstr "حدث استثناء."
+
+#: exceptions.py:43
+msgid "A Mock exception occurred."
+msgstr "حدث استثناء تجريبي."
+
+#: exceptions.py:51
+msgid "API error occurred."
+msgstr "حدث خطأ في واجهة برمجة التطبيقات."
+
+#: mixins.py:72
+msgid "Direct 3PlayMedia"
+msgstr "3PlayMedia المباشر"
+
+#: mixins.py:74
+msgid ""
+"Direct <a href='http://www.3playmedia.com/'>3PlayMedia</a> transcripts usage "
+"enabled."
+msgstr ""
+"تم تمكين استخدام نصوص <a href='http://www.3playmedia.com/'>3PlayMedia</a> "
+"المباشرة."
+
+#: mixins.py:79
+msgid "3PlayMedia API Key"
+msgstr "مفتاح واجهة برمجة التطبيقات 3Play Media"
+
+#: mixins.py:80 video_xblock.py:200
+msgid ""
+"You can generate a client token following official documentation of your "
+"video platform's API."
+msgstr ""
+"يمكنك إنشاء رمز عميل (Client Token) باتباع التوثيق الرسمي لواجهة برمجة "
+"التطبيقات الخاصة بمنصة الفيديو لديك."
+
+#: mixins.py:87
+msgid "File Id"
+msgstr "معرّف الملف"
+
+#: mixins.py:88
+msgid "3playmedia file id for download bind transcripts."
+msgstr "معرّف ملف 3Play Media لتنزيل النصوص المرفقة."
+
+#: mixins.py:305 tests/unit/test_mixins.py:573
+msgid "3PlayMedia transcripts fetching API request has failed!"
+msgstr "فشل طلب واجهة برمجة التطبيقات لجلب نصوص 3PlayMedia!"
+
+#: mixins.py:306 tests/unit/test_mixins.py:547
+msgid "3PlayMedia transcripts fetched successfully."
+msgstr "تم جلب نصوص 3PlayMedia بنجاح."
+
+#: mixins.py:348
+msgid "Transcript fetching failure: language [{}]"
+msgstr "فشل جلب النصوص: اللغة [{}]"
+
+#: mixins.py:427 tests/unit/test_mixins.py:678 tests/unit/test_mixins.py:717
+msgid "Success"
+msgstr "نجاح"
+
+#: mixins.py:428 tests/unit/test_mixins.py:697
+msgid "Check provided 3PlayMedia configuration"
+msgstr "تحقق من إعدادات 3PlayMedia المقدمة"
+
+#: mixins.py:432 tests/unit/test_mixins.py:659
+msgid "Initialization"
+msgstr "التهيئة"
+
+#: mixins.py:496
+msgid "Enabled transcripts"
+msgstr "تمكين النصوص"
+
+#: mixins.py:498
+msgid ""
+"Add transcripts in different languages. Click below to specify a language "
+"and upload an .srt transcript file for that language."
+msgstr ""
+"أضف نصوصًا بلغات مختلفة. انقر أدناه لتحديد اللغة ورفع ملف .srt الخاص بالنص "
+"لتلك اللغة."
+
+#: mixins.py:527
+msgid "Completion threshold (%)"
+msgstr "نسبة إتمام المشاهدة (%)"
+
+#: mixins.py:530
+msgid ""
+"Percentage of the video a student must watch to receive completion credit. "
+"Enter a value between 1 and 100. Default is 80."
+msgstr ""
+"النسبة المئوية من الفيديو التي يجب على الطالب مشاهدتها للحصول على اعتماد "
+"الإكمال. أدخل قيمة بين 1 و100. القيمة الافتراضية هي 80."
+
+#: static/html/fields/file-uploader.html:3
+#: static/html/studio-edit-transcripts.html:15
+#: static/js/studio-edit/transcripts-manual-upload.js:230
+msgid "Replace"
+msgstr "استبدال"
+
+#: static/html/fields/file-uploader.html:3
+#: static/html/studio-edit-transcripts.html:30
+msgid "Upload"
+msgstr "رفع"
+
+#: static/html/fields/file-uploader.html:4
+#: static/html/studio-edit-default-transcripts.html:21
+#: static/html/studio-edit-transcripts.html:16
+msgid "Download"
+msgstr "تنزيل"
+
+#: static/html/fields/set.html:17
+msgid "None Available"
+msgstr "لا يوجد متاح"
+
+#: static/html/student_view.html:21
+msgid "Download Handout"
+msgstr "تنزيل المادة التعليمية"
+
+#: static/html/student_view.html:29
+msgid "Download transcripts"
+msgstr "تنزيل النصوص"
+
+#: static/html/student_view.html:45
+msgid "Right-click and save link as to download file"
+msgstr "انقر بزر الماوس الأيمن واحفظ الرابط باسم لتنزيل الملف"
+
+#: static/html/student_view.html:46
+msgid "Download Video file"
+msgstr "تنزيل ملف الفيديو"
+
+#: static/html/studio-edit-3playmedia-apikey.html:5
+msgid "3playmedia Key"
+msgstr "مفتاح 3playmedia"
+
+#: static/html/studio-edit-brightcove-encryption.html:10
+msgid "Brightcove content protection"
+msgstr "حماية محتوى Brightcove"
+
+#: static/html/studio-edit-brightcove-encryption.html:14
+msgid "Video autoquality & encryption"
+msgstr "الجودة التلقائية للفيديو والتشفير"
+
+#: static/html/studio-edit-brightcove-encryption.html:18
+msgid "Default profile"
+msgstr "الملف الشخصي الافتراضي"
+
+#: static/html/studio-edit-brightcove-encryption.html:21
+msgid "Autoquality"
+msgstr "الجودة التلقائية"
+
+#: static/html/studio-edit-brightcove-encryption.html:24
+msgid "Autoquality & Encryption"
+msgstr "الجودة التلقائية والتشفير"
+
+#: static/html/studio-edit-brightcove-encryption.html:30
+msgid "Re-transcode this video"
+msgstr "أعد ترميز هذا الفيديو"
+
+#: static/html/studio-edit-brightcove-encryption.html:42
+msgid "Brightcove Video tech info"
+msgstr "المعلومات التقنية لفيديو Brightcove"
+
+#: static/html/studio-edit-brightcove-encryption.html:45
+msgid "Renditions count:"
+msgstr "عدد النُسخ:"
+
+#: static/html/studio-edit-brightcove-encryption.html:46
+msgid "Autoquality:"
+msgstr "الجودة التلقائية:"
+
+#: static/html/studio-edit-brightcove-encryption.html:47
+msgid "Encryption:"
+msgstr "التشفير:"
+
+#: static/html/studio-edit-default-transcripts.html:5
+msgid "Show available default transcripts"
+msgstr "عرض النصوص الافتراضية المتاحة"
+
+#: static/html/studio-edit-default-transcripts.html:27
+msgid "Delete"
+msgstr "حذف"
+
+#: static/html/studio-edit-default-transcripts.html:50
+#: static/html/studio-edit-default-transcripts.html:69
+msgid "Fetch"
+msgstr "جلب"
+
+#: static/html/studio-edit-default-transcripts.html:77
+msgid "There are no transcripts to upload."
+msgstr "لا توجد نصوص لرفعها."
+
+#: static/html/studio-edit-default-transcripts.html:82
+msgid ""
+"You can manually add transcripts using the `+Add` button in \"Enabled "
+"transcript\" field."
+msgstr ""
+"يمكنك إضافة النصوص يدويًا باستخدام زر `+Add` في حقل \"Enabled transcript\"."
+
+#: static/html/studio-edit-tab.html:41
+msgid "Unsupported field type. This setting cannot be edited."
+msgstr "نوع الحقل غير مدعوم. لا يمكن تعديل هذا الإعداد."
+
+#: static/html/studio-edit-tab.html:45
+msgid "Clear"
+msgstr "مسح"
+
+#: static/html/studio-edit-tab.html:46
+msgid "Clear Value"
+msgstr "مسح القيمة"
+
+#: static/html/studio-edit-token.html:6
+msgid "Application Access Token"
+msgstr "رمز وصول التطبيق"
+
+#: static/html/studio-edit-token.html:8
+msgid "Client Token"
+msgstr "رمز العميل"
+
+#: static/html/studio-edit-token.html:20
+msgid "Connect to video platform"
+msgstr "الاتصال بمنصة الفيديو"
+
+#: static/html/studio-edit-transcripts-accordion.html:5
+msgid "Manual & default transcripts"
+msgstr "الترجمات اليدوية والافتراضية"
+
+#: static/html/studio-edit-transcripts-accordion.html:28
+msgid "3PlayMedia transcripts"
+msgstr "نصوص 3PlayMedia"
+
+#: static/html/studio-edit-transcripts.html:40
+msgid "Add"
+msgstr "إضافة"
+
+#: static/html/studio-edit.html:11
+msgid "Save"
+msgstr "حفظ"
+
+#: static/html/studio-edit.html:14
+msgid "Cancel"
+msgstr "إلغاء"
+
+#: tests/unit/test_backends.py:251
+msgid "Not all the languages of transcripts fetched from video platform"
+msgstr "ليست كل لغات النصوص المزامنة التي جرى جلبها من منصة الفيديو"
+
+#: tests/unit/test_backends.py:737
+msgid ""
+"No timed transcript may be fetched from a video platform.\n"
+"Error details: test_exc_message"
+msgstr ""
+"لا يمكن جلب أي نص مزامن من منصة الفيديو.\n"
+"تفاصيل الخطأ: test_exc_message"
+
+#: tests/unit/test_video_xblock.py:34 video_xblock.py:80
+msgid "Video"
+msgstr "فيديو"
+
+#: video_xblock.py:81
+msgid "Component Display Name"
+msgstr "اسم عرض المكوّن"
+
+#: video_xblock.py:82
+msgid ""
+"The name students see. This name appears in the course ribbon and as a "
+"header for the video."
+msgstr "الاسم الذي يراه الطلاب. يظهر هذا الاسم في شريط المقرر وكعنوان للفيديو."
+
+#: video_xblock.py:88
+msgid "Video URL or FileId"
+msgstr "رابط الفيديو أو معرّف الملف"
+
+#: video_xblock.py:90
+msgid ""
+"Video URL of the video page. E.g. https://example.wistia.com/"
+"medias/12345abcde<br/>FileId for Tencent Player E.g. 5285890799710670616"
+msgstr ""
+"رابط صفحة الفيديو. مثل: https://example.wistia.com/medias/12345abcde<br/"
+">معرّف الملف لمشغّل Tencent مثل: 5285890799710670616"
+
+#: video_xblock.py:99
+msgid "Video Download Allowed"
+msgstr "السماح بتنزيل الفيديو"
+
+#: video_xblock.py:101
+msgid ""
+"Allow students to download this video if they cannot use the edX video "
+"player. A link to download the file appears below the video."
+msgstr ""
+"السماح للطلاب بتنزيل هذا الفيديو إذا لم يتمكنوا من استخدام مشغل فيديو edX. "
+"يظهر رابط لتنزيل الملف أسفل الفيديو."
+
+#: video_xblock.py:109
+msgid "Video file URL"
+msgstr "رابط ملف الفيديو"
+
+#: video_xblock.py:110
+msgid ""
+"The URL where you've posted non hosted versions of the video. URL must end "
+"in .mpeg, .mp4, .ogg, or .webm. (For browser compatibility, we strongly "
+"recommend .mp4 and .webm format.) To allow students to download these "
+"videos, set Video Download Allowed to True."
+msgstr ""
+"الرابط الذي قمت بنشر نسخ غير مستضافة من الفيديو عليه. يجب أن ينتهي الرابط "
+"بصيغة .mpeg أو .mp4 أو .ogg أو .webm. (لتوافق المتصفحات، نوصي بشدة باستخدام "
+"صيغتي .mp4 و .webm). للسماح للطلاب بتنزيل هذه الفيديوهات، قم بتعيين خيار "
+"\"السماح بتنزيل الفيديو\" إلى True."
+
+#: video_xblock.py:118
+msgid "Account Id"
+msgstr "معرّف الحساب"
+
+#: video_xblock.py:119
+msgid "Your Brightcove account id"
+msgstr "معرّف حساب Brightcove الخاص بك"
+
+#: video_xblock.py:125
+msgid "AppID"
+msgstr "AppID"
+
+#: video_xblock.py:126
+msgid "Your AppID of the VOD account. E.g. 1400329073"
+msgstr "معرّف AppID الخاص بك لحساب VOD. مثال: 1400329073"
+
+#: video_xblock.py:132
+msgid "Player Id"
+msgstr "معرّف المشغّل"
+
+#: video_xblock.py:133
+msgid ""
+"Your Brightcove player id. Use \"Luna\" theme for all your players. You can "
+"choose one of your players from a <a href=\"https://studio.brightcove.com/"
+"products/videocloud/players\" target=\"_blank\">list</a>."
+msgstr ""
+"معرّف مشغّل Brightcove الخاص بك. استخدم سمة \"Luna\" لجميع مشغلاتك. يمكنك "
+"اختيار أحد مشغلاتك من <a href=\"https://studio.brightcove.com/products/"
+"videocloud/players\" target=\"_blank\">القائمة</a>."
+
+#: video_xblock.py:145
+msgid ""
+"Time you want the video to start if you don't want the entire video to play. "
+"Not supported in the native mobile app: the full video file will play. "
+"Formatted as HH:MM:SS. The maximum value is 23:59:59."
+msgstr ""
+"الوقت الذي تريد أن يبدأ عنده الفيديو إذا كنت لا تريد تشغيل الفيديو بالكامل. "
+"غير مدعوم في تطبيق الجوال الأصلي: سيتم تشغيل ملف الفيديو بالكامل. تكون "
+"الصيغة HH:MM:SS. القيمة القصوى هي 23:59:59."
+
+#: video_xblock.py:149
+msgid "Video Start Time"
+msgstr "وقت بدء الفيديو"
+
+#: video_xblock.py:156
+msgid ""
+"Time you want the video to stop if you don't want the entire video to play. "
+"Not supported in the native mobile app: the full video file will play. "
+"Formatted as HH:MM:SS. The maximum value is 23:59:59."
+msgstr ""
+"الوقت الذي تريد أن يتوقف عنده الفيديو إذا كنت لا تريد تشغيل الفيديو بالكامل. "
+"غير مدعوم في تطبيق الجوال الأصلي: سيتم تشغيل ملف الفيديو بالكامل. تكون "
+"الصيغة HH:MM:SS. القيمة القصوى هي 23:59:59."
+
+#: video_xblock.py:160
+msgid "Video Stop Time"
+msgstr "وقت إيقاف الفيديو"
+
+#: video_xblock.py:168
+msgid "Upload handout"
+msgstr "رفع المادة التعليمية"
+
+#: video_xblock.py:169
+msgid "You can upload handout file for students"
+msgstr "يمكنك رفع ملف المادة التعليمية للطلاب"
+
+#: video_xblock.py:175
+msgid "Download Transcript Allowed"
+msgstr "السماح بتنزيل النص المزامن"
+
+#: video_xblock.py:177
+msgid ""
+"Allow students to download the timed transcript. A link to download the file "
+"appears below the video. By default, the transcript is an .vtt or .srt file. "
+"If you want to provide the transcript for download in a different format, "
+"upload a file by using the Upload Handout field."
+msgstr ""
+"السماح للطلاب بتنزيل النص المزامن للفيديو. يظهر رابط لتنزيل الملف أسفل "
+"الفيديو. بشكل افتراضي يكون النص بصيغة .vtt أو .srt. إذا أردت توفير النص "
+"بصيغة مختلفة، قم برفع ملف باستخدام حقل رفع المادة التعليمية."
+
+#: video_xblock.py:187
+msgid "Default Timed Transcript"
+msgstr "النص المتزامن الافتراضي"
+
+#: video_xblock.py:189
+#, fuzzy
+msgid ""
+"Default transcripts are uploaded automatically from a video platform to the "
+"list of available transcripts. Note: valid \"Video API Token\" should be "
+"given in order to make auto fetching possible. Advice: disable transcripts "
+"displaying on your video service to avoid transcripts overlapping."
+msgstr ""
+"يتم تحميل النصوص الافتراضية تلقائيًا من منصة الفيديو إلى قائمة النصوص "
+"المتاحة. ملاحظة: يجب إدخال \"Video API Token\" صالح لتمكين الجلب التلقائي. "
+"نصيحة: عطّل عرض النصوص في خدمة الفيديو الخاصة بك لتجنب تداخل النصوص."
+
+#: video_xblock.py:199
+msgid "Video API Token"
+msgstr "رمز واجهة برمجة الفيديو"
+
+#: video_xblock.py:207
+msgid "Metadata"
+msgstr "البيانات الوصفية"
+
+#: video_xblock.py:208
+msgid ""
+"This field stores different metadata, e.g. authentication data. If new "
+"metadata item is designed, this is to add an appropriate key to backend's "
+"`metadata_fields` property."
+msgstr ""
+"يخزن هذا الحقل بيانات وصفية مختلفة، مثل بيانات المصادقة. إذا تم تصميم عنصر "
+"بيانات وصفية جديد، فيجب إضافة المفتاح المناسب إلى الخاصية `metadata_fields` "
+"في الواجهة الخلفية."
+
+#: video_xblock.py:239
+msgid "Incorrect or unsupported video URL, please recheck."
+msgstr "رابط الفيديو غير صحيح أو غير مدعوم، يرجى إعادة التحقق."
+
+#: video_xblock.py:345
+msgid "Failed to fetch default transcripts."
+msgstr "فشل جلب النصوص الافتراضية."
+
+#: video_xblock.py:868
+msgid "Failed to convert file."
+msgstr "فشل تحويل الملف."
+
+#: video_xblock.py:887
+msgid "Upload completed"
+msgstr "اكتمل الرفع"
+
+#: video_xblock.py:917
+msgid "Couldn't upload transcript text."
+msgstr "تعذر رفع نص الترجمة."
+
+#: static/js/studio-edit/studio-edit.js:16
+msgid ""
+"This may be happening because of an error with our server or your internet "
+"connection. Try refreshing the page or making sure you are online."
+msgstr "ربما أن هذا قد يحدث بسبب وجود خطأ في خادمنا أو اتصال الإنترنت الخاص بك، يرجى محاولة تحديث الصفحة أو التأكد من أنك متصل بالإنترنت."
+
+#: static/js/studio-edit/studio-edit.js:379
+msgid "Saving"
+msgstr "جاري الحفظ"
+
+#: static/js/studio-edit/studio-edit.js:393
+#: static/js/studio-edit/studio-edit.js:416
+#: static/js/studio-edit/studio-edit.js:425
+#: static/js/studio-edit/studio-edit.js:503
+#: static/js/studio-edit/studio-edit.js:617
+msgid "Unable to update settings"
+msgstr "لم يتم تحديث الإعدادات"
+
+#: static/js/studio-edit/studio-edit.js:532
+msgid "File \"{filename}\" uploaded successfully"
+msgstr "الملف \"{filename}\" تم رفعه بنجاح"
+
+#: static/js/studio-edit/studio-edit.js:618
+msgid ""
+"Failed to upload file. Please try another file or contact the platform "
+"administrator."
+msgstr "فشل رفع الملف. يرجى تجربة ملف آخر أو الاتصال بمسؤول المنصة."
+
+#: static/js/studio-edit/transcripts-autoload.js:170
+#, fuzzy
+msgid ""
+"{langLabel} transcripts are successfully removed from the list of enabled "
+"ones."
+msgstr "تمت إزالة نصوص {langLabel} بنجاح من قائمة النصوص الممكّنة."
+
+#: static/js/studio-edit/transcripts-autoload.js:173
+#, fuzzy
+msgid ""
+"{langLabel} transcripts are removed, but can not be uploaded from the video "
+"platform."
+msgstr "تمت إزالة نصوص {langLabel}، ولكن لا يمكن رفعها من منصة الفيديو."
+
+#: static/js/studio-edit/transcripts-autoload.js:176
+msgid ""
+"{langLabel} transcripts are not neither removed nor added to the list of "
+"available ones."
+msgstr "لم يتم إزالة نصوص {langLabel} ولا إضافتها إلى قائمة النصوص المتاحة."

@@ -143,6 +143,35 @@ var PlayerState = function(player, playerState) {
         }
     };
 
+    /**
+     * Send a guaranteed progress ping via fetch({ keepalive: true }).
+     *
+     * Regular progress pings use postMessage → parent $.ajax which can be
+     * silently dropped if the page is being unloaded (e.g. the user navigates
+     * to the next unit immediately after the video ends). This variant sets
+     * beacon: true so the parent routes it through fetch({ keepalive: true })
+     * instead — a browser-guaranteed delivery path that survives page unload.
+     *
+     * Use this for end-of-video and page-hide events only.
+     */
+    var sendBeaconProgressPing = function(currentTime, duration) {
+        if (duration > 0) {
+            parent.postMessage(
+                {
+                    action: 'updateProgress',
+                    beacon: true,
+                    xblockUsageId: xblockUsageId,
+                    xblockFullUsageId: getXblockFullUsageId(),
+                    info: {
+                        current_time: currentTime,
+                        duration: duration
+                    }
+                },
+                document.location.protocol + '//' + document.location.host
+            );
+        }
+    };
+
     player.on('play', function() {
         if (!progressInterval) {
             progressInterval = setInterval(sendProgressPing, PROGRESS_PING_INTERVAL_MS);
@@ -157,26 +186,31 @@ var PlayerState = function(player, playerState) {
     });
 
     player.on('ended', function() {
-        // Send a ping with duration as current_time to ensure 100% progress is recorded,
-        // since currentTime() may already be 0 if the player loops immediately after ending.
-        // 5 seconds buffer to ensure that progress is not marked as the very end of the video
-        var duration = player.duration() - 5;
-        if (duration > 0) {
-            parent.postMessage(
-                {
-                    action: 'updateProgress',
-                    xblockUsageId: xblockUsageId,
-                    xblockFullUsageId: getXblockFullUsageId(),
-                    info: {
-                        current_time: duration,
-                        duration: duration
-                    }
-                },
-                document.location.protocol + '//' + document.location.host
-            );
-        }
+        // Send a beacon ping with full duration as current_time to guarantee 100% progress
+        // is recorded. We use player.duration() directly (not currentTime()) because Vimeo
+        // resets currentTime to 0 before the 'ended' event fires. The beacon flag ensures
+        // the parent uses fetch({ keepalive: true }) so this ping survives page navigation
+        // that may be triggered immediately after the video ends. The server clamps
+        // progress to 1.0, so there is no overshoot risk from sending the exact duration.
+        var duration = player.duration();
+        sendBeaconProgressPing(duration, duration);
         clearInterval(progressInterval);
         progressInterval = null;
+    });
+
+    // Flush progress when the tab becomes hidden (tab switch, browser minimise,
+    // or navigation to another page). visibilitychange is more reliable than
+    // beforeunload on mobile browsers.
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'hidden') {
+            sendBeaconProgressPing(player.currentTime(), player.duration());
+        }
+    });
+
+    // Fallback for environments where visibilitychange is not supported or
+    // does not fire on navigation (some older desktop browsers).
+    window.addEventListener('beforeunload', function() {
+        sendBeaconProgressPing(player.currentTime(), player.duration());
     });
 };
 

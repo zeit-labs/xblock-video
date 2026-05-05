@@ -125,8 +125,7 @@ var PlayerState = function(player, playerState) {
     var sendProgressPing = function() {
         var playerObj = player;
         var currentTime = playerObj.currentTime();
-        // 5 seconds buffer to ensure that progress is not marked as the very end of the video
-        var duration = playerObj.duration() - 5;
+        var duration = playerObj.duration();
         if (duration > 0) {
             parent.postMessage(
                 {
@@ -157,10 +156,11 @@ var PlayerState = function(player, playerState) {
     });
 
     player.on('ended', function() {
-        // Send a ping with duration as current_time to ensure 100% progress is recorded,
-        // since currentTime() may already be 0 if the player loops immediately after ending.
-        // 5 seconds buffer to ensure that progress is not marked as the very end of the video
-        var duration = player.duration() - 5;
+        // Send a ping with full duration as current_time to guarantee 100% progress is recorded.
+        // We use player.duration() directly (not currentTime()) because Vimeo resets currentTime
+        // to 0 before the 'ended' event fires. The server clamps progress to 1.0, so there is no
+        // overshoot risk from sending the exact duration.
+        var duration = player.duration();
         if (duration > 0) {
             parent.postMessage(
                 {

@@ -125,8 +125,7 @@ var PlayerState = function(player, playerState) {
     var sendProgressPing = function() {
         var playerObj = player;
         var currentTime = playerObj.currentTime();
-        // 5 seconds buffer to ensure that progress is not marked as the very end of the video
-        var duration = playerObj.duration() - 5;
+        var duration = playerObj.duration();
         if (duration > 0) {
             parent.postMessage(
                 {

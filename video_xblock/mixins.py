@@ -429,16 +429,16 @@ class TranscriptsMixin(XBlock):
 
         # the very first request during xblock creating:
         if api_key is None and file_id is None:
-            return Response(json={'isValid': is_valid, 'message': _("Initialization")})
+            return Response(json={'isValid': is_valid, 'message': str(_("Initialization"))})
 
         # the case when no options provided, and streaming is disabled:
         if not streaming_enabled:
-            return Response(json={'isValid': is_valid, 'message': success_message})
+            return Response(json={'isValid': is_valid, 'message': str(success_message)})
 
         # options partially provided or both empty, but streaming is enabled:
         if not (api_key and file_id):
             is_valid = False
-            return Response(json={'isValid': is_valid, 'message': invalid_message})
+            return Response(json={'isValid': is_valid, 'message': str(invalid_message)})
 
         feedback, transcripts_list = self.get_3pm_transcripts_list(file_id, api_key)
 

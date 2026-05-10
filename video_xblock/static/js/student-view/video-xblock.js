@@ -51,6 +51,36 @@ function VideoXBlockStudentViewInit(runtime, element) {
             console.log('Failed to process data');  // eslint-disable-line no-console
         });
     }
+
+    /** Read the CSRF token from the browser cookie */
+    function getCsrfToken() {
+        var match = document.cookie.match(/(?:^|;\s*)csrftoken=([^;]+)/);
+        return match ? match[1] : '';
+    }
+
+    /**
+     * Send data using fetch with keepalive:true.
+     *
+     * Unlike $.ajax, a keepalive fetch is queued by the browser outside the
+     * page lifecycle and is guaranteed to be delivered even if the user
+     * navigates away or closes the tab immediately after the call. This is
+     * used for critical end-of-video and page-hide progress pings so that
+     * watch_progress is never lost due to an in-flight XHR being discarded
+     * during unload.
+     */
+    function sendBeaconData(handlerUrl, data) {
+        fetch(handlerUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCsrfToken()
+            },
+            body: JSON.stringify(data),
+            keepalive: true
+        }).catch(function() {
+            console.log('Beacon data failed to send');  // eslint-disable-line no-console
+        });
+    }
     if (!window.videoXBlockListenerRegistered) {
         // Make sure we register event listener only once even if there are more than
         // one VideoXBlock on a page
@@ -85,7 +115,13 @@ function VideoXBlockStudentViewInit(runtime, element) {
             var action = handlers[event.data.action];
             var url = action[event.data.xblockUsageId] || action[event.data.xblockFullUsageId];  // eslint-disable-line vars-on-top
             if (url) {
-                sendData(url, event.data.info);
+                // Beacon-flagged messages (ended, visibilitychange, beforeunload) use
+                // fetch({ keepalive: true }) so delivery is guaranteed even during page unload.
+                if (event.data.beacon) {
+                    sendBeaconData(url, event.data.info);
+                } else {
+                    sendData(url, event.data.info);
+                }
             }
         } catch (err) {
             console.log(err);  // eslint-disable-line no-console

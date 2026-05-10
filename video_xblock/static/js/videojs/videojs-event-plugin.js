@@ -59,10 +59,11 @@
         };
 
         this.onSeek = function() {
-            this.log('seek_video', {
-                previous_time: previousTime,
-                new_time: currentTime
-            });
+            // No logs for seeking, as it can be very noisy.
+            // this.log('seek_video', {
+            //     previous_time: previousTime,
+            //     new_time: currentTime
+            // });
         };
 
         this.onSpeedChange = function(event, newSpeed, oldSpeed) {

@@ -500,25 +500,27 @@ class VideoXBlock(
         """
         current_time = float(data.get('current_time', 0))
         duration = float(data.get('duration', 0))
-        if float(self.max_played_time) > duration:
+        max_played_time = float(self.max_played_time)
+        if max_played_time > duration:
             self.max_played_time = duration
+            max_played_time = duration
 
         completion_threshold = 80.0 if self.completion_threshold is None else self.completion_threshold
-        completion_threshold = min(max(completion_threshold or 80.0, 1.0), 100.0)
+        completion_threshold = min(max(completion_threshold, 1.0), 100.0)
+        threshold = completion_threshold / 100.0
 
         if duration <= 0:
             return {
                 'watch_progress': self.watch_progress,
                 'last_position': self.last_position,
-                'completed': self.watch_progress >= (completion_threshold / 100.0),
+                'completed': self.watch_progress >= threshold,
             }
 
         max_time_for_progress = self.settings.get('max_time_for_progress', False)
         if max_time_for_progress:
-            saved_max = float(self.max_played_time)
             max_played_time_tolerance = 15  # seconds
-            if current_time <= saved_max + max_played_time_tolerance:
-                self.max_played_time = max(saved_max, current_time)
+            if current_time <= max_played_time + max_played_time_tolerance:
+                self.max_played_time = max(max_played_time, current_time)
             effective_time = min(current_time, float(self.max_played_time))
         else:
             effective_time = current_time
@@ -526,11 +528,10 @@ class VideoXBlock(
         self.last_position = current_time
 
         progress = min(effective_time / duration, 1.0)
-        was_completed = self.watch_progress >= (completion_threshold / 100.0)
+        was_completed = self.watch_progress >= threshold
         if progress > self.watch_progress:
             self.watch_progress = progress
 
-        threshold = completion_threshold / 100.0
         completed = self.watch_progress >= threshold
 
         if completed and not was_completed:

@@ -119,7 +119,7 @@ var PlayerState = function(player, playerState) {
      * Send a watch-progress ping to the parent frame every 5 seconds while playing.
      * The parent frame forwards it to the `update_progress` XBlock handler.
      */
-    var PROGRESS_PING_INTERVAL_MS = 5000;
+    var PROGRESS_PING_INTERVAL_MS = 1000 * 15;  // 15 seconds
     var progressInterval = null;
 
     var sendProgressPing = function() {

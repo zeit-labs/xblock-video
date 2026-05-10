@@ -32,7 +32,8 @@ var PlayerState = function(player, playerState) {
     var setInitialState = function(state) {
         var stateCurrentTime = state.currentTime;
         if (state.maxTimeForProgress) {
-            stateCurrentTime = state.maxPlayedTime;
+            // Avoid marking progress as the very end of the video
+            stateCurrentTime = Math.max(state.maxPlayedTime - 5, 0);
         } else {
             var playbackProgress = localStorage.getItem('playbackProgress');
             if (playbackProgress) {
@@ -119,14 +120,13 @@ var PlayerState = function(player, playerState) {
      * Send a watch-progress ping to the parent frame every 5 seconds while playing.
      * The parent frame forwards it to the `update_progress` XBlock handler.
      */
-    var PROGRESS_PING_INTERVAL_MS = 5000;
+    var PROGRESS_PING_INTERVAL_MS = 1000 * 15;  // 15 seconds
     var progressInterval = null;
 
     var sendProgressPing = function() {
         var playerObj = player;
         var currentTime = playerObj.currentTime();
-        // 5 seconds buffer to ensure that progress is not marked as the very end of the video
-        var duration = playerObj.duration() - 5;
+        var duration = playerObj.duration();
         if (duration > 0) {
             parent.postMessage(
                 {
@@ -159,8 +159,7 @@ var PlayerState = function(player, playerState) {
     player.on('ended', function() {
         // Send a ping with duration as current_time to ensure 100% progress is recorded,
         // since currentTime() may already be 0 if the player loops immediately after ending.
-        // 5 seconds buffer to ensure that progress is not marked as the very end of the video
-        var duration = player.duration() - 5;
+        var duration = player.duration();
         if (duration > 0) {
             parent.postMessage(
                 {

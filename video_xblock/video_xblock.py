@@ -500,38 +500,38 @@ class VideoXBlock(
         """
         current_time = float(data.get('current_time', 0))
         duration = float(data.get('duration', 0))
-        if float(self.max_played_time) > duration:
+        max_played_time = float(self.max_played_time) if self.max_played_time else 0.0
+        if max_played_time > duration:
             self.max_played_time = duration
-
-        completion_threshold = 80.0 if self.completion_threshold is None else self.completion_threshold
-        completion_threshold = min(max(completion_threshold or 80.0, 1.0), 100.0)
+            max_played_time = duration
 
         if duration <= 0:
             return {
                 'watch_progress': self.watch_progress,
                 'last_position': self.last_position,
-                'completed': self.watch_progress >= (completion_threshold / 100.0),
+                'completed': False,
             }
 
         max_time_for_progress = self.settings.get('max_time_for_progress', False)
+        if int(current_time) > int(max_played_time):
+            max_played_time = current_time
         if max_time_for_progress:
-            saved_max = float(self.max_played_time)
-            max_played_time_tolerance = 15  # seconds
-            if current_time <= saved_max + max_played_time_tolerance:
-                self.max_played_time = max(saved_max, current_time)
-            effective_time = min(current_time, float(self.max_played_time))
+            progress = min(max_played_time / duration, 1.0)
         else:
-            effective_time = current_time
+            progress = min(current_time / duration, 1.0)
 
         self.last_position = current_time
 
-        progress = min(effective_time / duration, 1.0)
-        was_completed = self.watch_progress >= (completion_threshold / 100.0)
+        _completion_threshold = 80.0 if self.completion_threshold is None else self.completion_threshold
+        # decrease threshold by 1% to resolve the issue of progress cannot hit 100% sometimes (float rounding issue)
+        threshold = int(min(max(_completion_threshold, 1), 100)) - 1
+
+        was_completed = int(self.watch_progress * 100) >= threshold
+
         if progress > self.watch_progress:
             self.watch_progress = progress
 
-        threshold = completion_threshold / 100.0
-        completed = self.watch_progress >= threshold
+        completed = int(self.watch_progress * 100) >= threshold
 
         if completed and not was_completed:
             completion_service = self.runtime.service(self, 'completion')
@@ -546,6 +546,10 @@ class VideoXBlock(
                         'Failed to submit completion for %s',
                         self.scope_ids.usage_id,
                     )
+            else:
+                log.warning('No completion service available for %s', self.scope_ids.usage_id)
+
+        self.max_played_time = max_played_time
 
         return {
             'watch_progress': self.watch_progress,

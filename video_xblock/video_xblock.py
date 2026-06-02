@@ -75,6 +75,7 @@ class VideoXBlock(
     has_custom_completion = True
     completion_mode = XBlockCompletionMode.COMPLETABLE
     icon_class = "video"
+    show_in_read_only_mode = True
 
     display_name = String(
         default=_('Video'),

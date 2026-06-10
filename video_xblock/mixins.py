@@ -424,8 +424,8 @@ class TranscriptsMixin(XBlock):
         streaming_enabled = bool(int(request.json.get('streaming_enabled')))  # streaming_enabled is expected to be "1"
 
         is_valid = True
-        success_message = _('Success')
-        invalid_message = _('Check provided 3PlayMedia configuration')
+        success_message = str(_('Success'))
+        invalid_message = str(_('Check provided 3PlayMedia configuration'))
 
         # the very first request during xblock creating:
         if api_key is None and file_id is None:
@@ -449,7 +449,7 @@ class TranscriptsMixin(XBlock):
             message = feedback['message']
             is_valid = False
 
-        return Response(json={'isValid': is_valid, 'message': message})
+        return Response(json={'isValid': is_valid, 'message': str(message)})
 
 
 @XBlock.needs('modulestore')

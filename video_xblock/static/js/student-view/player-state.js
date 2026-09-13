@@ -32,8 +32,14 @@ var PlayerState = function(player, playerState) {
     var setInitialState = function(state) {
         var stateCurrentTime = state.currentTime;
         if (state.maxTimeForProgress) {
-            // Avoid marking progress as the very end of the video
-            stateCurrentTime = Math.max(state.maxPlayedTime - 5, 0);
+            if (state.completionPublished) {
+                // Finished watches should restart from the beginning on rewatch,
+                // not seek to maxPlayedTime - 5 (which also overwrites localStorage).
+                stateCurrentTime = 0;
+            } else {
+                // Avoid marking progress as the very end of the video
+                stateCurrentTime = Math.max(state.maxPlayedTime - 5, 0);
+            }
         } else {
             var playbackProgress = localStorage.getItem('playbackProgress');
             if (playbackProgress) {

@@ -516,6 +516,16 @@ class PlaybackStateMixin(XBlock):
         default=0, scope=Scope.user_state, help='Fraction of video watched (0.0 to 1.0)'
     )
 
+    completion_published = Boolean(
+        default=False,
+        scope=Scope.user_state,
+        help=(
+            'Whether LMS BlockCompletion has been successfully submitted for this '
+            'learner. Separate from watch_progress so a failed submit_completion can '
+            'be retried on later progress pings.'
+        ),
+    )
+
     last_position = Float(
         default=0,
         scope=Scope.user_state,
@@ -576,6 +586,7 @@ class PlaybackStateMixin(XBlock):
             state.setdefault(mixedcase_field_name, getattr(self, field_name))
         state.setdefault(underscore_to_mixedcase('max_played_time'), getattr(self, 'max_played_time'))
         state.setdefault('maxTimeForProgress', self.settings.get('max_time_for_progress', False))
+        state.setdefault('completionPublished', self.completion_published)
 
         return state
 

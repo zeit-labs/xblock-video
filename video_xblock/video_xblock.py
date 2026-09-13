@@ -481,10 +481,14 @@ class VideoXBlock(
         """
         Handle periodic progress pings from the video player.
 
-        Receives pings (every 5 seconds, plus on pause/ended) with the current
+        Receives pings (every 15 seconds, plus on pause/ended) with the current
         playback position and total duration. Updates watch_progress (fraction
         watched) and last_position, and submits completion to the LMS when the
         completion_threshold is reached.
+
+        Completion publish is tracked separately via ``completion_published``.
+        If ``submit_completion`` fails after ``watch_progress`` already meets the
+        threshold, later pings retry until the LMS accepts the publish.
 
         When ``max_time_for_progress`` is enabled in XBLOCK_SETTINGS, the
         reported ``current_time`` is capped at ``max_played_time`` so that
@@ -511,6 +515,7 @@ class VideoXBlock(
                 'watch_progress': self.watch_progress,
                 'last_position': self.last_position,
                 'completed': False,
+                'completion_published': self.completion_published,
             }
 
         max_time_for_progress = self.settings.get('max_time_for_progress', False)
@@ -527,14 +532,12 @@ class VideoXBlock(
         # decrease threshold by 1% to resolve the issue of progress cannot hit 100% sometimes (float rounding issue)
         threshold = int(min(max(_completion_threshold, 1), 100)) - 1
 
-        was_completed = int(self.watch_progress * 100) >= threshold
-
         if progress > self.watch_progress:
             self.watch_progress = progress
 
         completed = int(self.watch_progress * 100) >= threshold
 
-        if completed and not was_completed:
+        if completed and not self.completion_published:
             completion_service = self.runtime.service(self, 'completion')
             if completion_service:
                 try:
@@ -542,6 +545,7 @@ class VideoXBlock(
                         block_key=self.scope_ids.usage_id,
                         completion=1.0,
                     )
+                    self.completion_published = True
                 except Exception:  # noqa: BLE001
                     log.exception(
                         'Failed to submit completion for %s',
@@ -556,6 +560,7 @@ class VideoXBlock(
             'watch_progress': self.watch_progress,
             'last_position': self.last_position,
             'completed': completed,
+            'completion_published': self.completion_published,
         }
 
     def clean_studio_edits(self, data):

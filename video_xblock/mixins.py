@@ -516,6 +516,16 @@ class PlaybackStateMixin(XBlock):
         default=0, scope=Scope.user_state, help='Fraction of video watched (0.0 to 1.0)'
     )
 
+    completion_published = Boolean(
+        default=False,
+        scope=Scope.user_state,
+        help=(
+            'Whether LMS BlockCompletion has been successfully submitted for this '
+            'learner. Separate from watch_progress so a failed submit_completion can '
+            'be retried on later progress pings.'
+        ),
+    )
+
     last_position = Float(
         default=0,
         scope=Scope.user_state,

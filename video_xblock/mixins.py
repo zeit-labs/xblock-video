@@ -586,6 +586,7 @@ class PlaybackStateMixin(XBlock):
             state.setdefault(mixedcase_field_name, getattr(self, field_name))
         state.setdefault(underscore_to_mixedcase('max_played_time'), getattr(self, 'max_played_time'))
         state.setdefault('maxTimeForProgress', self.settings.get('max_time_for_progress', False))
+        state.setdefault('completionPublished', self.completion_published)
 
         return state
 

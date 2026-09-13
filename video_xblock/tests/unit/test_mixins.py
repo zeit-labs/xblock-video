@@ -171,7 +171,8 @@ class PlaybackStateMixinTests(VideoXBlockTestBase):  # pylint: disable=test-inhe
             lang_mock.assert_called_once()
             course_id_mock.assert_not_called()
 
-    def test_player_state(self):
+    @patch.object(VideoXBlock, 'settings', new_callable=PropertyMock, return_value={})
+    def test_player_state(self, _settings_mock):
         """
         Test player state property.
         """
@@ -188,11 +189,15 @@ class PlaybackStateMixinTests(VideoXBlockTestBase):  # pylint: disable=test-inhe
                 'transcriptsEnabled': self.xblock.transcripts_enabled,
                 'captionsEnabled': self.xblock.captions_enabled,
                 'captionsLanguage': 'en',
-                'transcriptsObject': {}
+                'transcriptsObject': {},
+                'maxPlayedTime': self.xblock.max_played_time,
+                'maxTimeForProgress': False,
+                'completionPublished': False,
             }
         )
 
-    def test_save_player_state(self):
+    @patch.object(VideoXBlock, 'settings', new_callable=PropertyMock, return_value={})
+    def test_save_player_state(self, _settings_mock):
         """
         Test player state saving.
         """
@@ -224,7 +229,10 @@ class PlaybackStateMixinTests(VideoXBlockTestBase):  # pylint: disable=test-inhe
             'transcriptsEnabled': data['transcriptsEnabled'],
             'captionsEnabled': data['captionsEnabled'],
             'captionsLanguage': data['captionsLanguage'],
-            'transcriptsObject': {}
+            'transcriptsObject': {},
+            'maxPlayedTime': self.xblock.max_played_time,
+            'maxTimeForProgress': False,
+            'completionPublished': False,
         })
 
 

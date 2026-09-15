@@ -31,23 +31,12 @@ var PlayerState = function(player, playerState) {
     /**
      * Restore default or previously saved player state from server student state.
      *
-     * Resume rules (server-only):
-     * - anti-skip on + incomplete → maxPlayedTime - 5
-     * - anti-skip on + completionPublished → 0
-     * - anti-skip off → server currentTime
+     * Resume from the last recorded watched frame (`currentTime`) if one exists;
+     * otherwise start at 0. Anti-skip / completion flags affect progress credit,
+     * not the initial seek.
      */
     var setInitialState = function(state) {
         var stateCurrentTime = state.currentTime;
-        if (state.maxTimeForProgress) {
-            if (state.completionPublished) {
-                // Finished watches should restart from the beginning on rewatch,
-                // not seek to maxPlayedTime - 5.
-                stateCurrentTime = 0;
-            } else {
-                // Avoid marking progress as the very end of the video
-                stateCurrentTime = Math.max(state.maxPlayedTime - 5, 0);
-            }
-        }
         if (stateCurrentTime > 0) {
             player.currentTime(stateCurrentTime);
         }

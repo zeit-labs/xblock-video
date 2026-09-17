@@ -28,21 +28,15 @@ var PlayerState = function(player, playerState) {
 
     var transcripts = getTranscipts(playerState.transcripts);
 
-    /** Restore default or previously saved player state */
+    /**
+     * Restore default or previously saved player state from server student state.
+     *
+     * Resume from the last recorded watched frame (`currentTime`) if one exists;
+     * otherwise start at 0. Anti-skip / completion flags affect progress credit,
+     * not the initial seek.
+     */
     var setInitialState = function(state) {
         var stateCurrentTime = state.currentTime;
-        if (state.maxTimeForProgress) {
-            // Avoid marking progress as the very end of the video
-            stateCurrentTime = Math.max(state.maxPlayedTime - PROGRESS_PING_INTERVAL_MS * 2, 0);
-        } else {
-            var playbackProgress = localStorage.getItem('playbackProgress');
-            if (playbackProgress) {
-                playbackProgress = JSON.parse(playbackProgress);
-                if (playbackProgress[window.videoPlayerId]) {
-                    stateCurrentTime = playbackProgress[window.videoPlayerId];
-                }
-            }
-        }
         if (stateCurrentTime > 0) {
             player.currentTime(stateCurrentTime);
         }
@@ -92,21 +86,8 @@ var PlayerState = function(player, playerState) {
         }
     };
 
-    /**
-     *  Save player progress in browser's local storage.
-     *  We need it when user is switching between tabs.
-     */
-    var saveProgressToLocalStore = function() {
-        var playerObj = this;
-        var playbackProgress;
-        playbackProgress = JSON.parse(localStorage.getItem('playbackProgress') || '{}');
-        playbackProgress[window.videoPlayerId] = playerObj.ended() ? 0 : playerObj.currentTime();
-        localStorage.setItem('playbackProgress', JSON.stringify(playbackProgress));
-    };
-
     setInitialState(playerState);
 
-    player.on('timeupdate', saveProgressToLocalStore);
     player.on('volumechange', saveState);
     player.on('ratechange', saveState);
     player.on('play', saveState);

@@ -29,14 +29,15 @@ var PlayerState = function(player, playerState) {
     var transcripts = getTranscipts(playerState.transcripts);
 
     // Declared before setInitialState because the anti-skip resume below reads it.
-    var PROGRESS_PING_INTERVAL_MS = 1000 * 15;  // 15 seconds
+    var PROGRESS_PING_INTERVAL_SECONDS = 15;
+    var PROGRESS_PING_INTERVAL_MS = PROGRESS_PING_INTERVAL_SECONDS * 1000;
 
     /** Restore default or previously saved player state from server student state */
     var setInitialState = function(state) {
         var stateCurrentTime = state.currentTime;
         if (state.maxTimeForProgress) {
             // Avoid marking progress as the very end of the video
-            stateCurrentTime = Math.max(state.maxPlayedTime - PROGRESS_PING_INTERVAL_MS * 2, 0);
+            stateCurrentTime = Math.max(state.maxPlayedTime - PROGRESS_PING_INTERVAL_SECONDS * 2, 0);
         }
         if (stateCurrentTime > 0) {
             player.currentTime(stateCurrentTime);

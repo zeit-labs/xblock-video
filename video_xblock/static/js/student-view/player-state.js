@@ -33,7 +33,7 @@ var PlayerState = function(player, playerState) {
         var stateCurrentTime = state.currentTime;
         if (state.maxTimeForProgress) {
             // Avoid marking progress as the very end of the video
-            stateCurrentTime = Math.max(state.maxPlayedTime - PROGRESS_PING_INTERVAL_MS * 2, 0);
+            stateCurrentTime = Math.max(state.maxPlayedTime - 5, 0);
         } else {
             var playbackProgress = localStorage.getItem('playbackProgress');
             if (playbackProgress) {

@@ -190,7 +190,7 @@ var PlayerState = function(player, playerState) {
 
     // Fallback for environments where visibilitychange is not supported or
     // does not fire on navigation (some older desktop browsers).
-    window.addEventListener('beforeunload', function() {
+    window.addEventListener('pagehide', function() {
         sendBeaconProgressPing(player.currentTime(), player.duration());
     });
 };

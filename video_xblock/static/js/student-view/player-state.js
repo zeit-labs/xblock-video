@@ -29,7 +29,7 @@ var PlayerState = function(player, playerState) {
     var transcripts = getTranscipts(playerState.transcripts);
 
     // Declared before setInitialState because the anti-skip resume below reads it.
-    var PROGRESS_PING_INTERVAL_SECONDS = 15;
+    var PROGRESS_PING_INTERVAL_SECONDS = 10;
     var PROGRESS_PING_INTERVAL_MS = PROGRESS_PING_INTERVAL_SECONDS * 1000;
 
     /** Restore default or previously saved player state from server student state */

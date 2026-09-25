@@ -36,8 +36,8 @@ var PlayerState = function(player, playerState) {
     var setInitialState = function(state) {
         var stateCurrentTime = state.currentTime;
         if (state.maxTimeForProgress) {
-            // Avoid marking progress as the very end of the video
-            stateCurrentTime = Math.max(state.maxPlayedTime - PROGRESS_PING_INTERVAL_SECONDS * 2, 0);
+            // resume the playback at the latest saved time - 5 seconds
+            stateCurrentTime = Math.max(state.maxPlayedTime - 5, 0);
         }
         if (stateCurrentTime > 0) {
             player.currentTime(stateCurrentTime);

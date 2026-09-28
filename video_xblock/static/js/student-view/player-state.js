@@ -100,8 +100,8 @@ var PlayerState = function(player, playerState) {
     player.on('languagechange', saveState);
 
     /**
-     * Send a watch-progress ping to the parent frame every 15 seconds while playing.
-     * The parent frame forwards it to the `update_progress` XBlock handler.
+     * Send a watch-progress ping to the parent frame every PROGRESS_PING_INTERVAL_SECONDS
+     * while playing. The parent frame forwards it to the `update_progress` XBlock handler.
      */
     var progressInterval = null;
 
@@ -135,19 +135,20 @@ var PlayerState = function(player, playerState) {
      * instead — a browser-guaranteed delivery path that survives page unload.
      *
      * Use this for end-of-video and page-hide events only.
+     *
+     * `info` is the payload forwarded to the `update_progress` handler: either
+     * `{current_time, duration}` for a timestamp ping or `{ended: true, duration}`
+     * for the explicit end-of-video flag.
      */
-    var sendBeaconProgressPing = function(currentTime, duration) {
-        if (duration > 0) {
+    var sendBeaconProgressPing = function(info) {
+        if (info.duration > 0) {
             parent.postMessage(
                 {
                     action: 'updateProgress',
                     beacon: true,
                     xblockUsageId: xblockUsageId,
                     xblockFullUsageId: getXblockFullUsageId(),
-                    info: {
-                        current_time: currentTime,
-                        duration: duration
-                    }
+                    info: info
                 },
                 document.location.protocol + '//' + document.location.host
             );
@@ -168,13 +169,14 @@ var PlayerState = function(player, playerState) {
     });
 
     player.on('ended', function() {
-        // Send a beacon ping with full duration as current_time to guarantee 100% progress
-        // is recorded. We use player.duration() directly (not currentTime()) because Vimeo
-        // resets currentTime to 0 before the 'ended' event fires. The beacon flag ensures
-        // the parent uses fetch({ keepalive: true }) so this ping survives page navigation
-        // that may be triggered immediately after the video ends.
-        var duration = player.duration();
-        sendBeaconProgressPing(duration, duration);
+        // Report the end of the video with an explicit flag instead of a timestamp.
+        // Vimeo drops the millisecond fractions of `duration` and resets
+        // `currentTime` to 0 before the 'ended' event fires, so a timestamp-based
+        // ping can never reliably reach 100%. The backend treats `ended: true` as
+        // "finished" and forces full progress. The beacon flag makes the parent
+        // deliver this ping via fetch({ keepalive: true }) so it survives page
+        // navigation triggered immediately after the video ends.
+        sendBeaconProgressPing({ended: true, duration: player.duration()});
         clearInterval(progressInterval);
         progressInterval = null;
     });
@@ -184,14 +186,14 @@ var PlayerState = function(player, playerState) {
     // beforeunload on mobile browsers.
     document.addEventListener('visibilitychange', function() {
         if (document.visibilityState === 'hidden') {
-            sendBeaconProgressPing(player.currentTime(), player.duration());
+            sendBeaconProgressPing({current_time: player.currentTime(), duration: player.duration()});
         }
     });
 
     // Fallback for environments where visibilitychange is not supported or
     // does not fire on navigation (some older desktop browsers).
     window.addEventListener('pagehide', function() {
-        sendBeaconProgressPing(player.currentTime(), player.duration());
+        sendBeaconProgressPing({current_time: player.currentTime(), duration: player.duration()});
     });
 };
 

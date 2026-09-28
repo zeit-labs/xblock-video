@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Adaptation for use on Redwood release [RGOeX-26759]
 - Added adaptability for mobile devices [RGOeX-26487]
 
+### Fixed
+- Report end of video with an explicit `ended` flag so completion is recorded as 100% [ENG-957]
+
 ## [1.3.1] 2024-05-14
 
 ### Fixed

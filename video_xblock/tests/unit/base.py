@@ -40,7 +40,7 @@ class VideoXBlockTestBase(unittest.TestCase):
             DictFieldData(
                 {'account_id': 'account_id', 'metadata': {'client_id': 'api_key', 'client_secret': 'api_secret'}}
             ),
-            scope_ids=mock.Mock(spec=[])
+            scope_ids=mock.Mock(spec=[], usage_id='block-v1:test+course+run+type+block_id')
         )
 
         # Mocked objects is a list containing info about mocked entities.

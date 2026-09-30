@@ -481,10 +481,18 @@ class VideoXBlock(
         """
         Handle periodic progress pings from the video player.
 
-        Receives pings (every 15 seconds, plus on pause/ended) with the current
-        playback position and total duration. Updates watch_progress (fraction
-        watched) and last_position, and submits completion to the LMS when the
-        completion_threshold is reached.
+        Receives pings (every 10 seconds, plus on pause/ended/page-hide) with the
+        current playback position and total duration. Updates watch_progress
+        (fraction watched) and last_position, and submits completion to the LMS
+        when the completion_threshold is reached.
+
+        A ping carrying ``ended: true`` means the player reported the video as
+        finished. It is treated as full progress: ``current_time`` is replaced
+        with ``duration`` so ``max_played_time`` and ``watch_progress`` are
+        forced to the end of the video. This is needed because Vimeo drops the
+        millisecond fractions of ``duration`` and resets ``current_time`` to 0
+        before the ``ended`` event, so a timestamp-based ping can never
+        reliably reach 100%.
 
         Completion publish is tracked separately via ``completion_published``.
         If ``submit_completion`` fails after ``watch_progress`` already meets the
@@ -497,14 +505,16 @@ class VideoXBlock(
         natural playback.
 
         Arguments:
-            data (dict): Must contain 'current_time' (float, seconds) and
-                         'duration' (float, seconds).
+            data (dict): Must contain 'duration' (float, seconds) and either
+                         'current_time' (float, seconds) or 'ended' (bool) for
+                         a finished video.
             _suffix (string): Slug used for routing.
         Returns:
             dict: Updated watch_progress, last_position, and completion status.
         """
         current_time = float(data.get('current_time', 0))
         duration = float(data.get('duration', 0))
+        ended = bool(data.get('ended', False))
         max_played_time = float(self.max_played_time) if self.max_played_time else 0.0
         if max_played_time > duration:
             self.max_played_time = duration
@@ -517,6 +527,11 @@ class VideoXBlock(
                 'completed': False,
                 'completion_published': self.completion_published,
             }
+
+        if ended:
+            # Trust the explicit end-of-video flag over the reported timestamp:
+            # it forces max_played_time and watch_progress to the end of the video.
+            current_time = duration
 
         max_time_for_progress = self.settings.get('max_time_for_progress', False)
         if int(current_time) > int(max_played_time):

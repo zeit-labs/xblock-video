@@ -100,7 +100,7 @@ class UpdateProgressHandlerTests(VideoXBlockTestBase):  # pylint: disable=test-i
     Test cases for `VideoXBlock.update_progress` completion publish/retry.
     """
 
-    def _call_update_progress(self, current_time, duration, completion_service=None):
+    def _call_update_progress(self, current_time, duration, completion_service=None, extra=None, settings=None):
         """Helper to POST progress and optionally stub the completion service."""
         def service(_block, name):
             if name == 'completion':
@@ -108,12 +108,14 @@ class UpdateProgressHandlerTests(VideoXBlockTestBase):  # pylint: disable=test-i
             return Mock()
 
         self.xblock.runtime.service = Mock(side_effect=service)
-        request = arrange_request_mock(json.dumps({
+        data = {
             'current_time': current_time,
             'duration': duration,
-        }))
+        }
+        data.update(extra or {})
+        request = arrange_request_mock(json.dumps(data))
         with patch.object(VideoXBlock, 'settings', new_callable=PropertyMock) as settings_mock:
-            settings_mock.return_value = {}
+            settings_mock.return_value = settings or {}
             response = self.xblock.update_progress(request)
         return json.loads(response.body.decode())  # pylint: disable=no-member
 
@@ -178,3 +180,64 @@ class UpdateProgressHandlerTests(VideoXBlockTestBase):  # pylint: disable=test-i
         completion_service.submit_completion.assert_not_called()
         self.assertTrue(result['completed'])
         self.assertTrue(result['completion_published'])
+
+    def test_timestamp_ping_does_not_force_completion(self):
+        """A ping without the ended flag keeps using current_time for progress."""
+        self.xblock.completion_threshold = 100
+        self.xblock.watch_progress = 0.0
+        self.xblock.completion_published = False
+
+        result = self._call_update_progress(30, 100, completion_service=Mock())
+
+        self.assertEqual(self.xblock.watch_progress, 0.3)
+        self.assertFalse(result['completed'])
+
+    def test_ended_flag_forces_full_progress(self):
+        """ended=true marks the video finished even at a 100% threshold."""
+        self.xblock.completion_threshold = 100
+        self.xblock.watch_progress = 0.0
+        self.xblock.completion_published = False
+        self.xblock.max_played_time = 0.0
+        completion_service = Mock()
+
+        result = self._call_update_progress(
+            0, 75.123, completion_service=completion_service, extra={'ended': True}
+        )
+
+        self.assertEqual(self.xblock.watch_progress, 1.0)
+        self.assertEqual(self.xblock.max_played_time, 75.123)
+        self.assertEqual(self.xblock.last_position, 75.123)
+        self.assertTrue(result['completed'])
+        completion_service.submit_completion.assert_called_once_with(
+            block_key=self.xblock.scope_ids.usage_id,
+            completion=1.0,
+        )
+
+    def test_ended_flag_forces_full_progress_with_max_time_for_progress(self):
+        """ended=true advances max_played_time to duration when anti-skip is enabled."""
+        self.xblock.completion_threshold = 80
+        self.xblock.watch_progress = 0.0
+        self.xblock.completion_published = False
+        self.xblock.max_played_time = 12.0
+
+        result = self._call_update_progress(
+            0, 90.5, completion_service=Mock(),
+            extra={'ended': True}, settings={'max_time_for_progress': True},
+        )
+
+        self.assertEqual(self.xblock.max_played_time, 90.5)
+        self.assertEqual(self.xblock.watch_progress, 1.0)
+        self.assertTrue(result['completed'])
+
+    def test_ended_flag_without_duration_keeps_state(self):
+        """ended=true with an unusable duration leaves progress and completion untouched."""
+        self.xblock.completion_threshold = 80
+        self.xblock.watch_progress = 0.4
+        self.xblock.completion_published = False
+        self.xblock.max_played_time = 40.0
+
+        result = self._call_update_progress(0, 0, completion_service=Mock(), extra={'ended': True})
+
+        self.assertEqual(self.xblock.watch_progress, 0.4)
+        self.assertFalse(result['completed'])
+        self.assertFalse(result['completion_published'])
